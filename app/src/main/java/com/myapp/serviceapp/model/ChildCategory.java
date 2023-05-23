@@ -9,6 +9,12 @@ public class ChildCategory {
     public ChildCategory() {
     }
 
+    public ChildCategory(String catId, String name, String description) {
+        this.catId = catId;
+        this.name = name;
+        this.description = description;
+    }
+
     public ChildCategory(String catId, String name, String description, String catIcon) {
         this.catId = catId;
         this.name = name;

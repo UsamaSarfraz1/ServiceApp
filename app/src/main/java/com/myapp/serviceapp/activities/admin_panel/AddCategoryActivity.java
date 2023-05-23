@@ -47,14 +47,14 @@ public class AddCategoryActivity extends AppCompatActivity {
             }
         });
 
-        binding.image.setOnClickListener(new View.OnClickListener() {
+        /*binding.image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 pickMedia.launch(new PickVisualMediaRequest.Builder()
                         .setMediaType(ActivityResultContracts.PickVisualMedia.ImageOnly.INSTANCE)
                         .build());
             }
-        });
+        });*/
     }
 
     private void createCategory() {
@@ -63,8 +63,8 @@ public class AddCategoryActivity extends AppCompatActivity {
 
         if (!categoryName.isEmpty()) {
             String categoryId = mRef.push().getKey();
-            ChildCategory childCategory=new ChildCategory(categoryId,categoryName,categoryDesc,cati)
-            ParentCategory parentCategory=new ParentCategory(categoryId,categoryName);
+            ChildCategory childCategory=new ChildCategory(categoryId,categoryName,categoryDesc);
+            ParentCategory parentCategory=new ParentCategory(categoryId,categoryName,childCategory);
             mRef.child(categoryId).setValue(categoryName)
                     .addOnCompleteListener(task -> {
                         if (task.isSuccessful()) {

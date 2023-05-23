@@ -3,7 +3,7 @@ package com.myapp.serviceapp.model;
 public class ParentCategory {
     private String catParentId;
     private String catParentName;
-    private String ChildCategory;
+    private ChildCategory ChildCategory;
 
     public ParentCategory() {
     }
@@ -13,17 +13,17 @@ public class ParentCategory {
         this.catParentName = catParentName;
     }
 
-    public ParentCategory(String catParentId, String catParentName, String childCategory) {
+    public ParentCategory(String catParentId, String catParentName, ChildCategory childCategory) {
         this.catParentId = catParentId;
         this.catParentName = catParentName;
         ChildCategory = childCategory;
     }
 
-    public String getChildCategory() {
+    public ChildCategory getChildCategory() {
         return ChildCategory;
     }
 
-    public void setChildCategory(String childCategory) {
+    public void setChildCategory(ChildCategory childCategory) {
         ChildCategory = childCategory;
     }
 
