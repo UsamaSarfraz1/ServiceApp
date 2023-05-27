@@ -77,7 +77,7 @@ public class SignUpActivity extends AppCompatActivity {
                             String userId = user.getUid();
 
                             // Create a user object with the provided information
-                            User newUser = new User(userId, name, email, address, phone, cnic,"admin");
+                            User newUser = new User(userId, name, email, address, phone, cnic,"client");
 
                             // Save the user object to the Firebase Realtime Database
                             DatabaseReference usersRef = FirebaseDatabase.getInstance().getReference(Constants.USERS);

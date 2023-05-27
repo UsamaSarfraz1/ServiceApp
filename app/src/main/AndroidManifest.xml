@@ -13,28 +13,42 @@
         android:theme="@style/Theme.ServiceApp"
         tools:targetApi="31">
         <activity
-            android:name=".AddParentCategoryActivity"
+            android:name=".activities.user_panel.PostActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".ParentCategoryActivity"
+            android:name=".activities.user_panel.HomeActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".AddCategoryActivity"
+            android:name=".activities.admin_panel.AddParentCategoryActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".CategoryActivity"
+            android:name=".activities.admin_panel.ParentCategoryActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".activities.admin_panel.AddCategoryActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".activities.admin_panel.CategoryActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"

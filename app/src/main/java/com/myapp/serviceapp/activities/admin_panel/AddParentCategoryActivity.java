@@ -8,19 +8,20 @@ import android.view.View;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.myapp.serviceapp.R;
+import com.myapp.serviceapp.databinding.ActivityAddParentCategoryBinding;
 import com.myapp.serviceapp.databinding.ActivityParentCategoryBinding;
 import com.myapp.serviceapp.helper.Constants;
 import com.myapp.serviceapp.helper.Toasty;
 import com.myapp.serviceapp.model.ParentCategory;
 
 public class AddParentCategoryActivity extends AppCompatActivity {
-    private ActivityParentCategoryBinding binding;
+    private ActivityAddParentCategoryBinding binding;
     private DatabaseReference categoryRef;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding=ActivityParentCategoryBinding.inflate(getLayoutInflater());
+        binding=ActivityAddParentCategoryBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         categoryRef = database.getReference(Constants.CATEGORIES);
@@ -33,12 +34,12 @@ public class AddParentCategoryActivity extends AppCompatActivity {
     }
 
     private void createCategory() {
-        String categoryName = binding.categoryEditText.getText().toString().trim();
+        String categoryName = binding.addCategory.getText().toString().trim();
 
         if (!categoryName.isEmpty()) {
             String categoryId = categoryRef.push().getKey();
             ParentCategory parentCategory=new ParentCategory(categoryId,categoryName);
-            categoryRef.child(categoryId).setValue(categoryName)
+            categoryRef.child(categoryId).setValue(parentCategory)
                     .addOnCompleteListener(task -> {
                         if (task.isSuccessful()) {
                             // Perform any additional actions or show success message

@@ -9,15 +9,27 @@
     android:gravity="center"
     tools:context=".activities.admin_panel.AdminActivity">
     <Button
-        android:id="@+id/btn_category"
+        android:id="@+id/btn_parent_cat"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Category Crud"
+        />
+    <Button
+        android:id="@+id/btn_child_cat"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Child Category"
         />
     <Button
         android:id="@+id/btn_user"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="User"
+        />
+    <Button
+        android:id="@+id/btn_signOut"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Sign out"
         />
 </LinearLayout>

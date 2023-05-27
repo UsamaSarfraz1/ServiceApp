@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Patterns;
 import android.view.View;
@@ -30,15 +31,29 @@ public class LoginActivity extends AppCompatActivity {
     private ActivityLoginBinding binding;
     private FirebaseAuth firebaseAuth;
     private DatabaseReference usersRef;
+    SharedPreferences sharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding=ActivityLoginBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+        sharedPreferences=getSharedPreferences("com.service.app",MODE_PRIVATE);
         firebaseAuth = FirebaseAuth.getInstance();
-        usersRef = FirebaseDatabase.getInstance().getReference(Constants.USERS);
 
+        usersRef = FirebaseDatabase.getInstance().getReference(Constants.USERS);
+        if (firebaseAuth.getCurrentUser()!=null){
+            String userRole=sharedPreferences.getString("role","");
+            if (userRole.equals("client")){
+                startActivity(new Intent(LoginActivity.this,MainActivity.class));
+                finish();
+            }else if (userRole.equals("admin")){
+                startActivity(new Intent(LoginActivity.this,AdminActivity.class));
+                finish();
+            }else if(userRole.equals("freelancer")){
+
+            }
+        }
         binding.btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -81,13 +96,20 @@ public class LoginActivity extends AppCompatActivity {
                                     @Override
                                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                                         User user=snapshot.getValue(User.class);
+                                        SharedPreferences.Editor editor = sharedPreferences.edit();
                                         if (user.getRole().equals("admin")){
+                                            editor.putString("role","admin");
                                             Intent intent=new Intent(LoginActivity.this, AdminActivity.class);
                                             startActivity(intent);
-                                        }else{
+                                            finish();
+                                        }else if (user.getRole().equals("client")){
                                             Intent intent=new Intent(LoginActivity.this, MainActivity.class);
                                             startActivity(intent);
+                                            finish();
+                                        }else if (user.getRole().equals("freelancer")){
+
                                         }
+                                        editor.apply();
                                     }
 
                                     @Override

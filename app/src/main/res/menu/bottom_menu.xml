@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/nav_myTask"
+        android:title="My Task"
+        android:icon="@drawable/ic_baseline_task_24"
+        />
+    <item android:id="@+id/nav_post"
+        android:title="Post Task"
+        android:icon="@drawable/ic_baseline_add_task_24"
+        />
+    <item android:id="@+id/nav_profile"
+        android:title="Profile"
+        android:icon="@drawable/ic_baseline_person_24"
+        />
+</menu>
