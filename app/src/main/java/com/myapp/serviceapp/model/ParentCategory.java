@@ -2,29 +2,28 @@ package com.myapp.serviceapp.model;
 
 public class ParentCategory {
     private String catParentId;
+    private String catId;
     private String catParentName;
+/*
     private ChildCategory ChildCategory;
+*/
 
     public ParentCategory() {
     }
 
-    public ParentCategory(String catParentId, String catParentName) {
-        this.catParentId = catParentId;
+    public ParentCategory(String catId, String catParentName , String catParentId) {
+        this.catId = catId;
         this.catParentName = catParentName;
+        this.catParentId=catParentId;
     }
 
-    public ParentCategory(String catParentId, String catParentName, ChildCategory childCategory) {
-        this.catParentId = catParentId;
-        this.catParentName = catParentName;
-        ChildCategory = childCategory;
+
+    public String getCatId() {
+        return catId;
     }
 
-    public ChildCategory getChildCategory() {
-        return ChildCategory;
-    }
-
-    public void setChildCategory(ChildCategory childCategory) {
-        ChildCategory = childCategory;
+    public void setCatId(String catId) {
+        this.catId = catId;
     }
 
     public String getCatParentId() {
@@ -36,6 +35,11 @@ public class ParentCategory {
     }
 
     public String getCatParentName() {
+        return catParentName;
+    }
+
+    @Override
+    public String toString() {
         return catParentName;
     }
 

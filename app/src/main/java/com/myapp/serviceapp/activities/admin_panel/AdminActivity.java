@@ -32,7 +32,7 @@ public class AdminActivity extends AppCompatActivity {
         binding.btnChildCat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(AdminActivity.this,ChildCategory.class);
+                Intent intent=new Intent(AdminActivity.this,CategoryActivity.class);
                 startActivity(intent);
             }
         });

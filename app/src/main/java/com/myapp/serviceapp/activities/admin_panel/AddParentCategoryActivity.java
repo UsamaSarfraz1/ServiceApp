@@ -38,7 +38,8 @@ public class AddParentCategoryActivity extends AppCompatActivity {
 
         if (!categoryName.isEmpty()) {
             String categoryId = categoryRef.push().getKey();
-            ParentCategory parentCategory=new ParentCategory(categoryId,categoryName);
+            ParentCategory parentCategory=new ParentCategory(categoryId,categoryName,"");
+            assert categoryId != null;
             categoryRef.child(categoryId).setValue(parentCategory)
                     .addOnCompleteListener(task -> {
                         if (task.isSuccessful()) {
