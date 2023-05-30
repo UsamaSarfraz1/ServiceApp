@@ -21,10 +21,12 @@ import com.myapp.serviceapp.model.ParentCategory;
 
 import java.util.ArrayList;
 
-public class ParentCategoryActivity extends AppCompatActivity {
+public class ParentCategoryActivity extends AppCompatActivity implements ParentCategoryAdapter.OnItemButtonClickListener {
     private ActivityParentCategoryBinding binding;
     private FirebaseDatabase mDatabase;
     private DatabaseReference mRef;
+    ArrayList<ParentCategory> list;
+    ParentCategoryAdapter adapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,7 +45,9 @@ public class ParentCategoryActivity extends AppCompatActivity {
     }
 
     private void setUpRecyclerView() {
-        ArrayList<ParentCategory> list = new ArrayList<>();
+        list = new ArrayList<>();
+        adapter = new ParentCategoryAdapter(list,ParentCategoryActivity.this,this);
+        binding.rvParentCategory.setAdapter(adapter);
         mRef.orderByChild("catParentId").equalTo("").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -52,8 +56,7 @@ public class ParentCategoryActivity extends AppCompatActivity {
                     ParentCategory parentCategory= dataSnapchat.getValue(ParentCategory.class);
                     list.add(parentCategory);
                 }
-                ParentCategoryAdapter adapter = new ParentCategoryAdapter(list,ParentCategoryActivity.this);
-                binding.rvParentCategory.setAdapter(adapter);
+               adapter.notifyDataSetChanged();
             }
 
             @Override
@@ -62,7 +65,22 @@ public class ParentCategoryActivity extends AppCompatActivity {
             }
         });
 
+
+
+
     }
 
 
+    @Override
+    public void onDeleteItem(int position) {
+        mRef.child(list.get(position).getCatId()).removeValue();
+        adapter.notifyItemRemoved(position);
+    }
+
+    @Override
+    public void onEditItem(int position) {
+        Intent intent=new Intent(ParentCategoryActivity.this,AddCategoryActivity.class);
+        intent.putExtra("category",list.get(position));
+        startActivity(intent);
+    }
 }

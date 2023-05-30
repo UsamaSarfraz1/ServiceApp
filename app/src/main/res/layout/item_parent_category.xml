@@ -7,20 +7,43 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:cardUseCompatPadding="true"
-        app:contentPadding="20dp"
+        app:contentPadding="16dp"
         >
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="center_vertical"
             >
             <TextView
                 android:id="@+id/cat_title"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:text="Title"
                 android:textSize="16dp"
+                android:layout_weight="1"
                 android:textColor="@color/black"
                 android:textStyle="bold"
+                />
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                />
+            <ImageButton
+                android:id="@+id/btn_edit"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/_35sdp"
+                android:layout_weight="0.5"
+                android:src="@drawable/baseline_edit_24"
+                android:backgroundTint="@android:color/transparent"
+                />
+            <ImageButton
+                android:id="@+id/btn_delete"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/_35sdp"
+                android:layout_weight="0.5"
+                android:backgroundTint="@android:color/transparent"
+                android:src="@drawable/baseline_delete_24"
                 />
         </LinearLayout>
     </androidx.cardview.widget.CardView>

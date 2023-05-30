@@ -130,7 +130,7 @@ public class AddCategoryActivity extends AppCompatActivity {
 
         if (!categoryName.isEmpty()) {
             String categoryId = mRef.push().getKey();
-            ChildCategory childCategory=new ChildCategory(categoryId,categoryName,categoryDesc);
+           /* ChildCategory childCategory=new ChildCategory(categoryId,categoryName,categoryDesc);*/
             ParentCategory parentCategory=new ParentCategory(categoryId,categoryName,parentId);
             mRef.child(categoryId).setValue(parentCategory)
                     .addOnCompleteListener(task -> {

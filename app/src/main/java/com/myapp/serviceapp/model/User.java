@@ -1,6 +1,8 @@
 package com.myapp.serviceapp.model;
 
-public class User {
+import java.io.Serializable;
+
+public class User implements Serializable {
     private String userId;
     private String name;
     private String email;

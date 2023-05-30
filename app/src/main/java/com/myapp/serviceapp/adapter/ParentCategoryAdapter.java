@@ -5,6 +5,8 @@ import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -19,9 +21,12 @@ public class ParentCategoryAdapter extends RecyclerView.Adapter<ParentCategoryAd
     private List<ParentCategory> parentCategoryList;
     private Context context;
 
-    public ParentCategoryAdapter(List<ParentCategory> parentCategoryList, Context context) {
+    private OnItemButtonClickListener listener;
+
+    public ParentCategoryAdapter(List<ParentCategory> parentCategoryList, Context context,OnItemButtonClickListener listener) {
         this.parentCategoryList = parentCategoryList;
         this.context = context;
+        this.listener=listener;
     }
 
     @NonNull
@@ -36,6 +41,13 @@ public class ParentCategoryAdapter extends RecyclerView.Adapter<ParentCategoryAd
     public void onBindViewHolder(@NonNull ParentCategoryAdapter.ParentViewHolder holder, int position) {
         ParentCategory parentCategory=parentCategoryList.get(position);
         holder.catTitle.setText(parentCategory.getCatParentName());
+        holder.btnDelete.setOnClickListener(view -> listener.onDeleteItem(holder.getAdapterPosition()));
+        holder.btnEdit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                listener.onEditItem(holder.getAdapterPosition());
+            }
+        });
     }
 
     @Override
@@ -45,9 +57,17 @@ public class ParentCategoryAdapter extends RecyclerView.Adapter<ParentCategoryAd
 
     public class ParentViewHolder extends RecyclerView.ViewHolder {
         TextView catTitle;
+        ImageButton btnDelete, btnEdit;
         public ParentViewHolder(@NonNull View itemView) {
             super(itemView);
             catTitle=itemView.findViewById(R.id.cat_title);
+            btnDelete=itemView.findViewById(R.id.btn_delete);
+            btnEdit=itemView.findViewById(R.id.btn_edit);
         }
+    }
+
+    public interface OnItemButtonClickListener{
+        void onDeleteItem(int position);
+        void onEditItem(int position);
     }
 }

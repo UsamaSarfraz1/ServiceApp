@@ -19,10 +19,12 @@ import com.myapp.serviceapp.model.ParentCategory;
 
 import java.util.ArrayList;
 
-public class CategoryActivity extends AppCompatActivity {
+public class CategoryActivity extends AppCompatActivity implements ParentCategoryAdapter.OnItemButtonClickListener {
     private ActivityCategoryBinding binding;
     private FirebaseDatabase mDatabase;
     private DatabaseReference mRef;
+    private ParentCategoryAdapter adapter;
+    ArrayList<ParentCategory> list;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,12 +39,12 @@ public class CategoryActivity extends AppCompatActivity {
                 startActivity(new Intent(CategoryActivity.this, AddCategoryActivity.class));
             }
         });
-
-
     }
 
     private void setUpRecyclerView() {
-        ArrayList<ParentCategory> list = new ArrayList<>();
+        list = new ArrayList<>();
+        adapter = new ParentCategoryAdapter(list,CategoryActivity.this,this);
+        binding.rvCategory.setAdapter(adapter);
         mRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -53,8 +55,9 @@ public class CategoryActivity extends AppCompatActivity {
                         list.add(parentCategory);
                     }
                 }
-                ParentCategoryAdapter adapter = new ParentCategoryAdapter(list,CategoryActivity.this);
-                binding.rvCategory.setAdapter(adapter);
+
+                adapter.notifyDataSetChanged();
+
             }
 
             @Override
@@ -65,4 +68,16 @@ public class CategoryActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    public void onDeleteItem(int position) {
+        mRef.child(list.get(position).getCatId()).removeValue();
+        adapter.notifyItemRemoved(position);
+    }
+
+    @Override
+    public void onEditItem(int position) {
+        Intent intent=new Intent(CategoryActivity.this,UpdateCategoryActivity.class);
+        intent.putExtra("category",list.get(position));
+        startActivity(intent);
+    }
 }

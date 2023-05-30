@@ -1,6 +1,8 @@
 package com.myapp.serviceapp.model;
 
-public class ParentCategory {
+import java.io.Serializable;
+
+public class ParentCategory implements Serializable {
     private String catParentId;
     private String catId;
     private String catParentName;
