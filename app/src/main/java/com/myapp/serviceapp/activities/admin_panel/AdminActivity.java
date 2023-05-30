@@ -21,7 +21,7 @@ public class AdminActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding=ActivityAdminBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        binding.btnUser.setOnClickListener(new View.OnClickListener() {
+        binding.btnClient.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent=new Intent(AdminActivity.this, UserActivity.class);
