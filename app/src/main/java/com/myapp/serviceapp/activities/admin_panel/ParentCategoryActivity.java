@@ -79,7 +79,7 @@ public class ParentCategoryActivity extends AppCompatActivity implements ParentC
 
     @Override
     public void onEditItem(int position) {
-        Intent intent=new Intent(ParentCategoryActivity.this,AddCategoryActivity.class);
+        Intent intent=new Intent(ParentCategoryActivity.this,UpdateParentCategory.class);
         intent.putExtra("category",list.get(position));
         startActivity(intent);
     }

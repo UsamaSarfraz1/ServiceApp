@@ -15,16 +15,17 @@ import com.myapp.serviceapp.R;
 import com.myapp.serviceapp.activities.admin_panel.CategoryActivity;
 import com.myapp.serviceapp.activities.user_panel.PostActivity;
 import com.myapp.serviceapp.model.ChildCategory;
+import com.myapp.serviceapp.model.ParentCategory;
 
 import java.util.List;
 import java.util.zip.Inflater;
 
 public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.CategoryViewHolder> {
 
-    private List<ChildCategory> categoryList;
+    private List<ParentCategory> categoryList;
     private Context context;
 
-    public CategoryAdapter(List<ChildCategory> categoryList, Context context) {
+    public CategoryAdapter(List<ParentCategory> categoryList, Context context) {
         this.categoryList = categoryList;
         this.context = context;
     }
@@ -39,8 +40,8 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
 
     @Override
     public void onBindViewHolder(@NonNull CategoryAdapter.CategoryViewHolder holder, int position) {
-        ChildCategory category=categoryList.get(position);
-        holder.title.setText(category.getName());
+        ParentCategory category=categoryList.get(position);
+        holder.title.setText(category.getCatParentName());
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

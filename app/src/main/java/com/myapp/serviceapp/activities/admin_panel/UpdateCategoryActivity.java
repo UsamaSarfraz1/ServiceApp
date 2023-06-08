@@ -26,6 +26,8 @@ import com.myapp.serviceapp.helper.Constants;
 import com.myapp.serviceapp.model.ParentCategory;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class UpdateCategoryActivity extends AppCompatActivity {
     private ActivityUpdateCategoryBinding binding;
@@ -50,8 +52,9 @@ public class UpdateCategoryActivity extends AppCompatActivity {
         binding.btnUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mRef.child(Constants.CATEGORIES).child(category.getCatId())
-                        .setValue(new ParentCategory(category.getCatId(),binding.catNameEditText.getText().toString(),parentId))
+                Map<String, Object> updatedData = new HashMap<>();
+                updatedData.put(category.getCatId(), new ParentCategory(category.getCatId(), binding.catNameEditText.getText().toString(), parentId));
+                mRef.updateChildren(updatedData)
                         .addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {

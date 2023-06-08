@@ -6,21 +6,18 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Patterns;
 import android.view.View;
-import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.myapp.serviceapp.MainActivity;
-import com.myapp.serviceapp.R;
+
 import com.myapp.serviceapp.activities.admin_panel.AdminActivity;
 import com.myapp.serviceapp.databinding.ActivitySignUpBinding;
 import com.myapp.serviceapp.helper.Constants;
 import com.myapp.serviceapp.helper.Toasty;
 import com.myapp.serviceapp.model.User;
 
-import java.util.regex.Pattern;
 
 public class SignUpActivity extends AppCompatActivity {
     private ActivitySignUpBinding binding;
@@ -47,9 +44,12 @@ public class SignUpActivity extends AppCompatActivity {
                 String cnic=binding.editTextCNIC.getText().toString();
                 if (name.isEmpty()){
                     Toasty.show(SignUpActivity.this,"Please enter name");
-                }else if (email.isEmpty() || !Patterns.EMAIL_ADDRESS.matcher(email).matches()){
+                }else if (email.isEmpty() ){
                     Toasty.show(SignUpActivity.this,"Please enter email");
-                }else if(password.isEmpty()){
+                }else if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()){
+                    Toasty.show(SignUpActivity.this,"Please enter correct formated email");
+                }
+                else if(password.isEmpty()){
                     Toasty.show(SignUpActivity.this,"Please enter password");
                 }else if(address.isEmpty()){
                     Toasty.show(SignUpActivity.this,"Please enter address");

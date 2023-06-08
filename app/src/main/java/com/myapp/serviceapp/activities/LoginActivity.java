@@ -4,7 +4,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Patterns;
 import android.view.View;
@@ -20,10 +19,12 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.myapp.serviceapp.MainActivity;
+import com.google.gson.Gson;
 import com.myapp.serviceapp.activities.admin_panel.AdminActivity;
+import com.myapp.serviceapp.activities.user_panel.HomeActivity;
 import com.myapp.serviceapp.databinding.ActivityLoginBinding;
 import com.myapp.serviceapp.helper.Constants;
+import com.myapp.serviceapp.helper.SharedPrefsManager;
 import com.myapp.serviceapp.helper.Toasty;
 import com.myapp.serviceapp.model.User;
 
@@ -31,29 +32,35 @@ public class LoginActivity extends AppCompatActivity {
     private ActivityLoginBinding binding;
     private FirebaseAuth firebaseAuth;
     private DatabaseReference usersRef;
-    SharedPreferences sharedPreferences;
+    private SharedPrefsManager sharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding=ActivityLoginBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        sharedPreferences=getSharedPreferences("com.service.app",MODE_PRIVATE);
+        sharedPreferences=new SharedPrefsManager(this);
         firebaseAuth = FirebaseAuth.getInstance();
 
         usersRef = FirebaseDatabase.getInstance().getReference(Constants.USERS);
         if (firebaseAuth.getCurrentUser()!=null){
-            String userRole=sharedPreferences.getString("role","");
-            if (userRole.equals("client")){
-                startActivity(new Intent(LoginActivity.this,MainActivity.class));
-                finish();
-            }else if (userRole.equals("admin")){
-                startActivity(new Intent(LoginActivity.this,AdminActivity.class));
-                finish();
-            }else if(userRole.equals("freelancer")){
+            String userRole=sharedPreferences.getRole();
+            switch (userRole) {
+                case "client":
+                    startActivity(new Intent(LoginActivity.this, HomeActivity.class));
+                    finish();
+                    break;
+                case "admin":
+                    startActivity(new Intent(LoginActivity.this, AdminActivity.class));
+                    finish();
+                    break;
+                case "freelancer":
 
+                    break;
             }
         }
+
+
         binding.btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -96,20 +103,26 @@ public class LoginActivity extends AppCompatActivity {
                                     @Override
                                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                                         User user=snapshot.getValue(User.class);
-                                        SharedPreferences.Editor editor = sharedPreferences.edit();
-                                        if (user.getRole().equals("admin")){
-                                            editor.putString("role","admin");
-                                            Intent intent=new Intent(LoginActivity.this, AdminActivity.class);
-                                            startActivity(intent);
-                                            finish();
-                                        }else if (user.getRole().equals("client")){
-                                            Intent intent=new Intent(LoginActivity.this, MainActivity.class);
-                                            startActivity(intent);
-                                            finish();
-                                        }else if (user.getRole().equals("freelancer")){
+                                        sharedPreferences.saveUser(user);
+                                        switch (user.getRole()) {
+                                            case "admin": {
+                                                sharedPreferences.saveRole("admin");
+                                                Intent intent = new Intent(LoginActivity.this, AdminActivity.class);
+                                                startActivity(intent);
+                                                finish();
+                                                break;
+                                            }
+                                            case "client": {
+                                                sharedPreferences.saveRole("client");
+                                                Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+                                                startActivity(intent);
+                                                finish();
+                                                break;
+                                            }
+                                            case "freelancer":
 
+                                                break;
                                         }
-                                        editor.apply();
                                     }
 
                                     @Override
