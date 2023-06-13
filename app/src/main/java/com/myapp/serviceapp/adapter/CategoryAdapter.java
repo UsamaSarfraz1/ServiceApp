@@ -46,6 +46,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
             @Override
             public void onClick(View v) {
                 Intent intent= new Intent(context, PostActivity.class);
+                intent.putExtra("cat",category);
                 context.startActivity(intent);
             }
         });

@@ -16,8 +16,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.myapp.serviceapp.adapter.CategoryAdapter;
 import com.myapp.serviceapp.databinding.FragmentPostTaskBinding;
-import com.myapp.serviceapp.databinding.FragmentProfileBinding;
-import com.myapp.serviceapp.model.ChildCategory;
+import com.myapp.serviceapp.helper.Constants;
 import com.myapp.serviceapp.model.ParentCategory;
 
 import java.util.ArrayList;
@@ -32,12 +31,12 @@ public class PostTaskFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = FragmentPostTaskBinding.inflate(inflater, container, false);
+        mDatabase= FirebaseDatabase.getInstance();
+        mRef=mDatabase.getReference().child(Constants.CATEGORIES);
         getDate();
         return binding.getRoot();
 
     }
-
-
     private void getDate() {
         ArrayList<ParentCategory> list = new ArrayList<>();
         CategoryAdapter categoryAdapter = new CategoryAdapter(list, requireActivity());
@@ -52,14 +51,10 @@ public class PostTaskFragment extends Fragment {
                         list.add(parentCategory);
                     }
                 }
-
                 categoryAdapter.notifyDataSetChanged();
-
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
             }
         });
     }

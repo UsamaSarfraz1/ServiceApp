@@ -24,7 +24,7 @@
         android:layout_height="wrap_content"
         android:hint="e.g Clean my house"
         android:layout_marginTop="10dp"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
         >
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/title_edit_text"
@@ -37,7 +37,7 @@
         android:id="@+id/task_detail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Task Title"
+        android:text="Task Detail"
         android:textStyle="bold"
         android:textSize="14sp"
         android:layout_marginTop="20dp"
@@ -49,14 +49,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="e.g General cleaning required for 5 edroom house"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
         android:layout_marginTop="10dp"
         >
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/detail_editText"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:lines="8"
+            android:lines="6"
             android:gravity="top"
             />
     </com.google.android.material.textfield.TextInputLayout>
@@ -78,12 +78,13 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:hint="Locatioin"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
 
         >
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:inputType="text"
             />
     </com.google.android.material.textfield.TextInputLayout>
     
@@ -98,6 +99,7 @@
         android:textColor="@color/black"
         />
     <TextView
+        android:id="@+id/calendar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
@@ -120,6 +122,20 @@
         android:textColor="@color/black"
         android:layout_marginTop="10dp"
         />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+        >
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/budgetEditText"
+            android:inputType="number"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:hint="ex: 2500 rs"
+            />
+    </com.google.android.material.textfield.TextInputLayout>
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_post"
         android:layout_width="match_parent"

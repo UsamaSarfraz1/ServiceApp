@@ -19,7 +19,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.gson.Gson;
 import com.myapp.serviceapp.activities.admin_panel.AdminActivity;
 import com.myapp.serviceapp.activities.user_panel.HomeActivity;
 import com.myapp.serviceapp.databinding.ActivityLoginBinding;
@@ -123,6 +122,7 @@ public class LoginActivity extends AppCompatActivity {
 
                                                 break;
                                         }
+                                        binding.progressBar.setVisibility(View.GONE);
                                     }
 
                                     @Override
@@ -130,7 +130,7 @@ public class LoginActivity extends AppCompatActivity {
                                         Toasty.show(LoginActivity.this,error.getMessage());
                                     }
                                 });
-                                binding.progressBar.setVisibility(View.GONE);
+
 
                                 // Handle the signed-in user
                             } else {
