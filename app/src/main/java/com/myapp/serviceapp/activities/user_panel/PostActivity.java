@@ -1,11 +1,13 @@
 package com.myapp.serviceapp.activities.user_panel;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
+import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.DatePicker;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -19,6 +21,9 @@ import com.myapp.serviceapp.helper.Toasty;
 import com.myapp.serviceapp.model.ParentCategory;
 import com.myapp.serviceapp.model.TaskModel;
 
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+
 public class PostActivity extends AppCompatActivity {
     private ActivityPostBinding binding;
     private ParentCategory parentCategory;
@@ -26,6 +31,9 @@ public class PostActivity extends AppCompatActivity {
     private FirebaseDatabase mDatabase;
     private ProgressDialog progressDialog;
     SharedPrefsManager sharedPrefsManager;
+
+    private GregorianCalendar calendar;
+    private DatePickerDialog datePickerDialog;
 
     private String userId;
     @Override
@@ -36,6 +44,18 @@ public class PostActivity extends AppCompatActivity {
         sharedPrefsManager=new SharedPrefsManager(this);
         userId=sharedPrefsManager.getUser().getUserId();
         progressDialog=new ProgressDialog(this);
+        setUpCurrentDate();
+
+
+        binding.btnCalendar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Calendar instance = Calendar.getInstance();
+                DatePickerDialog datePickerDialog = new DatePickerDialog(PostActivity.this, dateSetListener, instance.get(1),instance.get(2),instance.get(5));
+                datePickerDialog.show();
+            }
+        });
+
 
         mDatabase=FirebaseDatabase.getInstance();
         mRef=mDatabase.getReference(Constants.TASK).child(userId);
@@ -49,8 +69,33 @@ public class PostActivity extends AppCompatActivity {
                 uploadPost();
             }
         });
-
     }
+    DatePickerDialog.OnDateSetListener dateSetListener = new DatePickerDialog.OnDateSetListener() {
+        @Override
+        public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+            binding.editTextCurrentYear.setText(addZero(year));
+            binding.editTextCurrentMonth.setText(addZero(monthOfYear + 1));
+            binding.editTextCurrentDay.setText(addZero(dayOfMonth));
+
+        }
+    };
+    private void setUpCurrentDate(){
+        Calendar c=Calendar.getInstance();
+        binding.editTextCurrentYear.setText(java.lang.String.valueOf(c.get(Calendar.YEAR)));
+        binding.editTextCurrentMonth.setText(addZero(c.get(Calendar.MONTH) + 1));
+        binding.editTextCurrentDay.setText(addZero(c.get(Calendar.DAY_OF_MONTH)));
+    }
+    private static String addZero(int number) {
+        String n;
+        if (number < 10) {
+            n = "0" + number;
+        } else {
+            n = Integer.toString(number);
+        }
+        return n;
+    }
+
+
 
     private void uploadPost() {
         progressDialog.setMessage("Please Wait...");
@@ -60,7 +105,7 @@ public class PostActivity extends AppCompatActivity {
         String detail= binding.detailEditText.getText().toString();
         String location= "Faisalabad";
         String budget = binding.budgetEditText.getText().toString();
-        String date = "25 aug 2025";
+        String date = binding.editTextCurrentDay.getText().toString()+"-"+binding.editTextCurrentMonth.getText().toString()+"-"+binding.editTextCurrentYear.getText().toString();
         String key=mRef.push().getKey();
         TaskModel task=new TaskModel(key,userId,title,detail,catId,catName,location,budget,date);
 

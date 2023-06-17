@@ -2,6 +2,7 @@ package com.myapp.serviceapp.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
@@ -17,9 +18,13 @@ public class MyTaskAdapter extends RecyclerView.Adapter<MyTaskAdapter.MyTaskView
     private ArrayList<TaskModel> taskList;
     private Context context;
 
-    public MyTaskAdapter(ArrayList<TaskModel> taskList, Context context) {
+    private OnItemButtonClickListener listener;
+
+
+    public MyTaskAdapter(ArrayList<TaskModel> taskList, Context context, MyTaskAdapter.OnItemButtonClickListener listener) {
         this.taskList = taskList;
         this.context = context;
+        this.listener=listener;
     }
 
     @NonNull
@@ -50,6 +55,25 @@ public class MyTaskAdapter extends RecyclerView.Adapter<MyTaskAdapter.MyTaskView
             binding.taskTitle.setText(taskModel.getTaskTitle());
             binding.price.setText(taskModel.getBudget());
             binding.location.setText(taskModel.getLocation());
+            binding.btnDel.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    listener.onDeleteItem(getAdapterPosition());
+                }
+            });
+
+            binding.btnEdit.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    listener.onEditItem(getAdapterPosition());
+                }
+            });
         }
+    }
+
+
+    public interface OnItemButtonClickListener{
+        void onDeleteItem(int position);
+        void onEditItem(int position);
     }
 }

@@ -22,7 +22,7 @@ import com.myapp.serviceapp.model.TaskModel;
 
 import java.util.ArrayList;
 
-public class HomeFragment extends Fragment {
+public class HomeFragment extends Fragment implements MyTaskAdapter.OnItemButtonClickListener {
 
     private FragmentHomeBinding binding;
     private FirebaseDatabase mDatabase;
@@ -44,7 +44,7 @@ public class HomeFragment extends Fragment {
     }
 
     private void setUpRecyclerView() {
-        myTaskAdapter=new MyTaskAdapter(tasklist,requireContext());
+        myTaskAdapter=new MyTaskAdapter(tasklist,requireContext(),this);
         binding.rvTask.setAdapter(myTaskAdapter);
         mRef.addValueEventListener(new ValueEventListener() {
             @Override
@@ -65,4 +65,14 @@ public class HomeFragment extends Fragment {
     }
 
 
+    @Override
+    public void onDeleteItem(int position) {
+        mRef.child(tasklist.get(position).getCatId()).removeValue();
+        myTaskAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onEditItem(int position) {
+
+    }
 }

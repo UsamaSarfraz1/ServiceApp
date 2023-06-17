@@ -15,8 +15,6 @@
         android:textStyle="bold"
         android:textSize="14sp"
         android:textColor="@color/black"
-        
-        
         />
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/title_layout"
@@ -98,20 +96,87 @@
         android:textSize="14dp"
         android:textColor="@color/black"
         />
-    <TextView
-        android:id="@+id/calendar"
+    <FrameLayout android:id="@+id/FrameLayout1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:paddingVertical="18dp"
-        android:text="25 May 2023"
-        android:textColor="@color/black"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        android:paddingHorizontal="10dp"
-        android:background="@drawable/textview_border"
-        android:drawablePadding="10dp"
-        app:drawableStartCompat="@drawable/ic_baseline_calendar_month_24" />
+        >
+
+        <LinearLayout
+            android:id="@+id/lldate1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/et_calander_border">
+
+            <EditText
+                android:id="@+id/editTextCurrentDay"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="#00000000"
+                android:ellipsize="end"
+                android:gravity="start"
+                android:hint="dd"
+                android:inputType="textCapCharacters|number|numberSigned|numberDecimal|numberPassword|phone"
+                android:maxLength="2"
+                android:nextFocusDown="@+id/etTMonth"
+                android:padding="10dp"
+                android:selectAllOnFocus="true"
+                android:textColor="#000000"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/tvSeprator1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="-"
+                android:textColor="#000000" />
+
+            <EditText
+                android:id="@+id/editTextCurrentMonth"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="#00000000"
+                android:ellipsize="end"
+                android:gravity="top|bottom|start|right|center_vertical|fill_vertical|center_horizontal|fill_horizontal|center|fill|start|end"
+                android:hint="mm"
+                android:inputType="textCapCharacters|number|numberSigned|numberDecimal|numberPassword|phone"
+                android:maxLength="2"
+                android:nextFocusDown="@+id/etTYear"
+                android:padding="10dp"
+                android:selectAllOnFocus="true"
+                android:textColor="#000000"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/tvSeprator2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="-"
+                android:textColor="#000000" />
+
+            <EditText
+                android:id="@+id/editTextCurrentYear"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="#00000000"
+                android:ellipsize="end"
+                android:hint="yyyy"
+                android:inputType="textCapCharacters|number|numberSigned|numberDecimal|numberPassword|phone"
+                android:maxLength="4"
+                android:nextFocusDown="@+id/etBDay"
+                android:padding="10dp"
+                android:selectAllOnFocus="true"
+                android:textColor="#000000"
+                android:textSize="20sp" />
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/btn_calendar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/_10sdp"
+            android:layout_gravity="end|center_vertical"
+            android:src="@drawable/baseline_calendar_month_24" />
+    </FrameLayout>
     <TextView
         android:id="@+id/budget"
         android:layout_width="wrap_content"

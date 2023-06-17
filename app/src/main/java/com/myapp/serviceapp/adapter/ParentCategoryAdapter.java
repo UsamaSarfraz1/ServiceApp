@@ -1,11 +1,9 @@
 package com.myapp.serviceapp.adapter;
 
 import android.content.Context;
-import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -18,7 +16,7 @@ import com.myapp.serviceapp.model.ParentCategory;
 import java.util.List;
 
 public class ParentCategoryAdapter extends RecyclerView.Adapter<ParentCategoryAdapter.ParentViewHolder> {
-    private List<ParentCategory> parentCategoryList;
+    private final List<ParentCategory> parentCategoryList;
     private Context context;
 
     private OnItemButtonClickListener listener;
@@ -42,20 +40,14 @@ public class ParentCategoryAdapter extends RecyclerView.Adapter<ParentCategoryAd
         ParentCategory parentCategory=parentCategoryList.get(position);
         holder.catTitle.setText(parentCategory.getCatParentName());
         holder.btnDelete.setOnClickListener(view -> listener.onDeleteItem(holder.getAdapterPosition()));
-        holder.btnEdit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                listener.onEditItem(holder.getAdapterPosition());
-            }
-        });
+        holder.btnEdit.setOnClickListener(view -> listener.onEditItem(holder.getAdapterPosition()));
     }
-
     @Override
     public int getItemCount() {
         return parentCategoryList.size();
     }
 
-    public class ParentViewHolder extends RecyclerView.ViewHolder {
+    public static class ParentViewHolder extends RecyclerView.ViewHolder {
         TextView catTitle;
         ImageButton btnDelete, btnEdit;
         public ParentViewHolder(@NonNull View itemView) {
