@@ -29,6 +29,15 @@ public class AdminActivity extends AppCompatActivity {
             }
         });
 
+
+        binding.btnFreelancers.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(AdminActivity.this,FreelancerActivity.class);
+                startActivity(intent);
+            }
+        });
+
         binding.btnChildCat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

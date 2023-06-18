@@ -1,18 +1,20 @@
 package com.myapp.serviceapp.activities;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Patterns;
 import android.view.View;
+import android.widget.RadioButton;
+import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-
-import com.myapp.serviceapp.activities.admin_panel.AdminActivity;
+import com.myapp.serviceapp.MainActivity;
+import com.myapp.serviceapp.activities.user_panel.HomeActivity;
 import com.myapp.serviceapp.databinding.ActivitySignUpBinding;
 import com.myapp.serviceapp.helper.Constants;
 import com.myapp.serviceapp.helper.Toasty;
@@ -21,12 +23,18 @@ import com.myapp.serviceapp.model.User;
 
 public class SignUpActivity extends AppCompatActivity {
     private ActivitySignUpBinding binding;
+    String selectedOption;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding=ActivitySignUpBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-
+        binding.radioButton.setOnCheckedChangeListener((group, checkedId) -> {
+            RadioButton radioButton = findViewById(checkedId);
+            selectedOption = radioButton.getText().toString();
+            Toast.makeText(SignUpActivity.this, "Selected Option: " + selectedOption, Toast.LENGTH_SHORT).show();
+        });
         binding.btnSignIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -77,7 +85,7 @@ public class SignUpActivity extends AppCompatActivity {
                             String userId = user.getUid();
 
                             // Create a user object with the provided information
-                            User newUser = new User(userId, name, email, address, phone, cnic,"client");
+                            User newUser = new User(userId, name, email, address, phone, cnic,selectedOption.toLowerCase());
 
                             // Save the user object to the Firebase Realtime Database
                             DatabaseReference usersRef = FirebaseDatabase.getInstance().getReference(Constants.USERS);
@@ -87,7 +95,7 @@ public class SignUpActivity extends AppCompatActivity {
                                             // User data saved successfully
                                             // Do something else if needed
                                             binding.progressBar.setVisibility(View.GONE);
-                                            Intent intent=new Intent(SignUpActivity.this, AdminActivity.class);
+                                            Intent intent=new Intent(SignUpActivity.this, HomeActivity.class);
                                             startActivity(intent);
                                             finish();
                                             Toasty.show(this,"Welcome");

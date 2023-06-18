@@ -49,22 +49,20 @@ public class UpdateCategoryActivity extends AppCompatActivity {
         binding.catNameEditText.setText(category.getCatParentName());
         setupDropDown();
         parentId= category.getCatParentId();
-        binding.btnUpdate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Map<String, Object> updatedData = new HashMap<>();
-                updatedData.put(category.getCatId(), new ParentCategory(category.getCatId(), binding.catNameEditText.getText().toString(), parentId));
-                mRef.updateChildren(updatedData)
-                        .addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        if (task.isSuccessful()){
-                            Toast.makeText(UpdateCategoryActivity.this,"Category Updated",Toast.LENGTH_SHORT).show();
 
-                        }
+        binding.btnUpdate.setOnClickListener(view -> {
+            Map<String, Object> updatedData = new HashMap<>();
+            updatedData.put(category.getCatId(), new ParentCategory(category.getCatId(), binding.catNameEditText.getText().toString(), parentId));
+            mRef.updateChildren(updatedData)
+                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                @Override
+                public void onComplete(@NonNull Task<Void> task) {
+                    if (task.isSuccessful()){
+                        Toast.makeText(UpdateCategoryActivity.this,"Category Updated",Toast.LENGTH_SHORT).show();
+
                     }
-                });
-            }
+                }
+            });
         });
     }
 

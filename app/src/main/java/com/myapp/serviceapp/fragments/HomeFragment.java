@@ -1,5 +1,6 @@
 package com.myapp.serviceapp.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +15,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.myapp.serviceapp.activities.user_panel.UpdatePost;
 import com.myapp.serviceapp.adapter.MyTaskAdapter;
 import com.myapp.serviceapp.databinding.FragmentHomeBinding;
 import com.myapp.serviceapp.helper.Constants;
@@ -46,9 +48,11 @@ public class HomeFragment extends Fragment implements MyTaskAdapter.OnItemButton
     private void setUpRecyclerView() {
         myTaskAdapter=new MyTaskAdapter(tasklist,requireContext(),this);
         binding.rvTask.setAdapter(myTaskAdapter);
+
         mRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                tasklist.clear();
                 for (DataSnapshot snapshot1:snapshot.getChildren()) {
                     TaskModel taskModel=snapshot1.getValue(TaskModel.class);
                     tasklist.add(taskModel);
@@ -73,6 +77,9 @@ public class HomeFragment extends Fragment implements MyTaskAdapter.OnItemButton
 
     @Override
     public void onEditItem(int position) {
+        Intent intent = new Intent(requireContext(),UpdatePost.class);
+        intent.putExtra("post",tasklist.get(position));
+        startActivity(intent);
 
     }
 }

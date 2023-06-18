@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp"
+    android:orientation="vertical"
+    tools:context=".activities.user_panel.PostActivity">
+    <TextView
+        android:id="@+id/task_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Task Title"
+        android:textStyle="bold"
+        android:textSize="14sp"
+        android:textColor="@color/black"
+        />
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/title_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="e.g Clean my house"
+        android:layout_marginTop="10dp"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+        >
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/title_edit_text"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:inputType="text"
+            />
+    </com.google.android.material.textfield.TextInputLayout>
+    <TextView
+        android:id="@+id/task_detail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Task Detail"
+        android:textStyle="bold"
+        android:textSize="14sp"
+        android:layout_marginTop="20dp"
+        android:textColor="@color/black"
+
+        />
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/detail_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="e.g General cleaning required for 5 edroom house"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+        android:layout_marginTop="10dp"
+        >
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/detail_editText"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:lines="6"
+            android:gravity="top"
+            />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <TextView
+        android:id="@+id/location"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Location"
+        android:layout_marginTop="20dp"
+        android:textSize="14sp"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+
+        />
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/location_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:hint="Locatioin"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+
+        >
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:inputType="text"
+            />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <TextView
+        android:id="@+id/lable_date"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="When do you want to start the work?"
+        android:textStyle="bold"
+        android:textSize="14dp"
+        android:textColor="@color/black"
+        />
+    <FrameLayout android:id="@+id/FrameLayout1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+
+        <LinearLayout
+            android:id="@+id/lldate1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/et_calander_border">
+
+            <EditText
+                android:id="@+id/editTextCurrentDay"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="#00000000"
+                android:ellipsize="end"
+                android:gravity="start"
+                android:hint="dd"
+                android:inputType="textCapCharacters|number|numberSigned|numberDecimal|numberPassword|phone"
+                android:maxLength="2"
+                android:nextFocusDown="@+id/etTMonth"
+                android:padding="10dp"
+                android:selectAllOnFocus="true"
+                android:textColor="#000000"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/tvSeprator1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="-"
+                android:textColor="#000000" />
+
+            <EditText
+                android:id="@+id/editTextCurrentMonth"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="#00000000"
+                android:ellipsize="end"
+                android:gravity="top|bottom|start|right|center_vertical|fill_vertical|center_horizontal|fill_horizontal|center|fill|start|end"
+                android:hint="mm"
+                android:inputType="textCapCharacters|number|numberSigned|numberDecimal|numberPassword|phone"
+                android:maxLength="2"
+                android:nextFocusDown="@+id/etTYear"
+                android:padding="10dp"
+                android:selectAllOnFocus="true"
+                android:textColor="#000000"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/tvSeprator2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="-"
+                android:textColor="#000000" />
+
+            <EditText
+                android:id="@+id/editTextCurrentYear"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="#00000000"
+                android:ellipsize="end"
+                android:hint="yyyy"
+                android:inputType="textCapCharacters|number|numberSigned|numberDecimal|numberPassword|phone"
+                android:maxLength="4"
+                android:nextFocusDown="@+id/etBDay"
+                android:padding="10dp"
+                android:selectAllOnFocus="true"
+                android:textColor="#000000"
+                android:textSize="20sp" />
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/btn_calendar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/_10sdp"
+            android:layout_gravity="end|center_vertical"
+            android:src="@drawable/baseline_calendar_month_24" />
+    </FrameLayout>
+    <TextView
+        android:id="@+id/budget"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Your Budget"
+        android:textStyle="bold"
+        android:textSize="14dp"
+        android:textColor="@color/black"
+        android:layout_marginTop="10dp"
+        />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+        >
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/budgetEditText"
+            android:inputType="number"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:hint="ex: 2500 rs"
+            />
+    </com.google.android.material.textfield.TextInputLayout>
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_post"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Update"
+        android:layout_marginTop="10dp"
+        />
+</LinearLayout>

@@ -1,6 +1,8 @@
 package com.myapp.serviceapp.model;
 
-public class TaskModel {
+import java.io.Serializable;
+
+public class TaskModel implements Serializable {
     String taskId;
     String taskTitle;
     String taskDetails;

@@ -35,7 +35,6 @@ public class PostTaskFragment extends Fragment {
         mRef=mDatabase.getReference().child(Constants.CATEGORIES);
         getDate();
         return binding.getRoot();
-
     }
     private void getDate() {
         ArrayList<ParentCategory> list = new ArrayList<>();

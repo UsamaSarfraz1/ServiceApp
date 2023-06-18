@@ -1,18 +1,17 @@
 package com.myapp.serviceapp.activities.admin_panel;
 
+import android.os.Bundle;
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
-
-import android.os.Bundle;
-import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.myapp.serviceapp.R;
 import com.myapp.serviceapp.adapter.UserAdapter;
 import com.myapp.serviceapp.databinding.ActivityUserBinding;
 import com.myapp.serviceapp.helper.Constants;
@@ -21,7 +20,7 @@ import com.myapp.serviceapp.model.User;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UserActivity extends AppCompatActivity {
+public class FreelancerActivity extends AppCompatActivity {
     private ActivityUserBinding binding;
     private List<User> userList;
     private UserAdapter userAdapter;
@@ -47,7 +46,7 @@ public class UserActivity extends AppCompatActivity {
     }
 
     private void retrieveUserList() {
-        usersRef.orderByChild("role").equalTo("client").addValueEventListener(new ValueEventListener() {
+        usersRef.orderByChild("role").equalTo("freelancer").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 // Clear the existing user list
@@ -69,7 +68,7 @@ public class UserActivity extends AppCompatActivity {
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
                 // Handle any errors during data retrieval
-                Toast.makeText(UserActivity.this, "Failed to retrieve user list", Toast.LENGTH_SHORT).show();
+                Toast.makeText(FreelancerActivity.this, "Failed to retrieve user list", Toast.LENGTH_SHORT).show();
             }
         });
     }
