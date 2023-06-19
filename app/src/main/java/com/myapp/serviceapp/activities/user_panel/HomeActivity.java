@@ -12,6 +12,7 @@ import android.view.MenuItem;
 import com.google.android.material.navigation.NavigationBarView;
 import com.myapp.serviceapp.R;
 import com.myapp.serviceapp.databinding.ActivityHomeBinding;
+import com.myapp.serviceapp.fragments.AllTaskFragment;
 import com.myapp.serviceapp.fragments.HomeFragment;
 import com.myapp.serviceapp.fragments.PostTaskFragment;
 import com.myapp.serviceapp.fragments.ProfileFragment;
@@ -48,6 +49,9 @@ public class HomeActivity extends AppCompatActivity implements NavigationBarView
                 break;
             case R.id.nav_profile:
                 fragment=new ProfileFragment();
+                break;
+            case R.id.nav_task:
+                fragment=new AllTaskFragment();
                 break;
         }
 
