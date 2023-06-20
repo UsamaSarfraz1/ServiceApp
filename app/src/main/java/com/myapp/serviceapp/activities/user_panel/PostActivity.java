@@ -47,13 +47,10 @@ public class PostActivity extends AppCompatActivity {
         setUpCurrentDate();
 
 
-        binding.btnCalendar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Calendar instance = Calendar.getInstance();
-                DatePickerDialog datePickerDialog = new DatePickerDialog(PostActivity.this, dateSetListener, instance.get(1),instance.get(2),instance.get(5));
-                datePickerDialog.show();
-            }
+        binding.btnCalendar.setOnClickListener(view -> {
+            Calendar instance = Calendar.getInstance();
+            DatePickerDialog datePickerDialog = new DatePickerDialog(PostActivity.this, dateSetListener, instance.get(1),instance.get(2),instance.get(5));
+            datePickerDialog.show();
         });
 
 
