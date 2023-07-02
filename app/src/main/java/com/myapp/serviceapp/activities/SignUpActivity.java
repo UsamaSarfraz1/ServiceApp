@@ -17,6 +17,7 @@ import com.myapp.serviceapp.MainActivity;
 import com.myapp.serviceapp.activities.user_panel.HomeActivity;
 import com.myapp.serviceapp.databinding.ActivitySignUpBinding;
 import com.myapp.serviceapp.helper.Constants;
+import com.myapp.serviceapp.helper.SharedPrefsManager;
 import com.myapp.serviceapp.helper.Toasty;
 import com.myapp.serviceapp.model.User;
 
@@ -24,12 +25,15 @@ import com.myapp.serviceapp.model.User;
 public class SignUpActivity extends AppCompatActivity {
     private ActivitySignUpBinding binding;
     String selectedOption;
+    private SharedPrefsManager sharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding=ActivitySignUpBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+        sharedPreferences=new SharedPrefsManager(this);
+
         binding.radioButton.setOnCheckedChangeListener((group, checkedId) -> {
             RadioButton radioButton = findViewById(checkedId);
             selectedOption = radioButton.getText().toString();
@@ -94,6 +98,8 @@ public class SignUpActivity extends AppCompatActivity {
                                         if (task1.isSuccessful()) {
                                             // User data saved successfully
                                             // Do something else if needed
+                                            sharedPreferences.saveUser(newUser);
+                                            sharedPreferences.saveRole(selectedOption);
                                             binding.progressBar.setVisibility(View.GONE);
                                             Intent intent=new Intent(SignUpActivity.this, HomeActivity.class);
                                             startActivity(intent);

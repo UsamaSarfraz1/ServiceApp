@@ -54,7 +54,8 @@ public class LoginActivity extends AppCompatActivity {
                     finish();
                     break;
                 case "freelancer":
-
+                    startActivity(new Intent(LoginActivity.this, HomeActivity.class));
+                    finish();
                     break;
             }
         }
@@ -119,7 +120,9 @@ public class LoginActivity extends AppCompatActivity {
                                                 break;
                                             }
                                             case "freelancer":
-
+                                                sharedPreferences.saveRole("freelancer");
+                                                Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+                                                startActivity(intent);
                                                 break;
                                         }
                                         binding.progressBar.setVisibility(View.GONE);
