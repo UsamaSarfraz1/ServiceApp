@@ -1,6 +1,9 @@
 package com.myapp.serviceapp.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 public class User implements Serializable {
     private String userId;
@@ -10,6 +13,9 @@ public class User implements Serializable {
     private String phone;
     private String cnic;
     private String role;
+    private String status;
+    private Double userAverageRating;
+    private HashMap<String,Reviews> reviewsList;
 
     public User() {
         // Empty constructor required for Firebase
@@ -23,6 +29,32 @@ public class User implements Serializable {
         this.phone = phone;
         this.cnic = cnic;
         this.role = role;
+        this.reviewsList=new HashMap<>();
+        this.status="open";
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public HashMap<String, Reviews> getReviewsList() {
+        return reviewsList;
+    }
+
+    public void setReviewsList(HashMap<String , Reviews> reviewsList) {
+        this.reviewsList = reviewsList;
+    }
+
+    public Double getUserAverageRating() {
+        return userAverageRating;
+    }
+
+    public void setUserAverageRating(Double userAverageRating) {
+        this.userAverageRating = userAverageRating;
     }
 
     public String getRole() {
@@ -80,4 +112,21 @@ public class User implements Serializable {
     public void setCnic(String cnic) {
         this.cnic = cnic;
     }
+
+    public double getAverageRating() {
+        if (reviewsList == null || reviewsList.isEmpty()) {
+            return 0.0; // Return 0 if there are no reviews
+        }
+
+        double sum = 0.0;
+        int count = 0;
+
+        for (Reviews review : reviewsList.values()) {
+            sum += review.getRating();
+            count++;
+        }
+
+        return sum / count;
+    }
+
 }

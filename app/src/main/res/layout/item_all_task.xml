@@ -38,10 +38,11 @@
                 app:layout_constraintTop_toTopOf="@id/task_icon" />
 
             <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnStatus"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:cornerRadius="50pt"
-                android:text="Offer"
+                android:text="Open"
                 android:textAllCaps="false"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"

@@ -40,7 +40,9 @@ public class UpdateParentCategory extends AppCompatActivity {
                 updateCatMap.put(parentCategory.getCatId(),new ParentCategory(
                         parentCategory.getCatId()
                         ,binding.addCategory.getText().toString()
-                        ,parentCategory.getCatParentId())
+                        ,parentCategory.getCatParentId()
+                        ,""
+                        )
                 );
                 mRef.updateChildren(updateCatMap).addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override

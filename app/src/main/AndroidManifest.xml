@@ -13,16 +13,19 @@
         android:theme="@style/Theme.ServiceApp"
         tools:targetApi="31">
         <activity
-            android:name=".TaskDetailsActivity"
+            android:name=".activities.user_panel.TaskDetailsActivity"
+            android:screenOrientation="portrait"
             android:exported="false" />
         <activity
             android:name=".activities.user_panel.UpdatePost"
+            android:screenOrientation="portrait"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
+            android:screenOrientation="portrait"
             android:name=".activities.admin_panel.FreelancerActivity"
             android:exported="false">
             <meta-data
@@ -30,6 +33,7 @@
                 android:value="" />
         </activity>
         <activity
+            android:screenOrientation="portrait"
             android:name=".activities.admin_panel.UpdateParentCategory"
             android:exported="false">
             <meta-data
@@ -37,6 +41,7 @@
                 android:value="" />
         </activity>
         <activity
+            android:screenOrientation="portrait"
             android:name=".activities.admin_panel.UpdateCategoryActivity"
             android:exported="false" />
         <activity

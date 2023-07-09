@@ -55,7 +55,7 @@ public class UpdatePost extends AppCompatActivity {
         binding.editTextCurrentDay.setText(dateArray[0]);
         binding.editTextCurrentMonth.setText(dateArray[1]);
         binding.editTextCurrentYear.setText(dateArray[2]);
-        binding.location.setText(taskModel.getLocation());
+        binding.locationEditText.setText(taskModel.getLocation());
         binding.titleEditText.setText(taskModel.getTaskTitle());
 
         binding.btnPost.setOnClickListener(v -> updateTask());
@@ -80,8 +80,7 @@ public class UpdatePost extends AppCompatActivity {
         String budget = binding.budgetEditText.getText().toString();
         String date = binding.editTextCurrentDay.getText().toString()+"-"+binding.editTextCurrentMonth.getText().toString()+"-"+binding.editTextCurrentYear.getText().toString();
         Map<String, Object> updatedData = new HashMap<>();
-        TaskModel task=new TaskModel(taskModel.getTaskId(),userId,title,detail,catId,catName,location,budget,date);
-
+        TaskModel task=new TaskModel(taskModel.getTaskId(),userId,title,detail,catId,catName,location,budget,date,taskModel.getStatus(),taskModel.getAssignUser());
         updatedData.put(taskModel.getTaskId(),task);
         if (title.isEmpty()){
             Toasty.show(this,"Please Enter Title");

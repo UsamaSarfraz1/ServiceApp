@@ -15,7 +15,7 @@ import com.myapp.serviceapp.model.ParentCategory;
 
 import java.util.List;
 
-public class ParentCategoryAdapter extends RecyclerView.Adapter<ParentCategoryAdapter.ParentViewHolder> {
+public class  ParentCategoryAdapter extends RecyclerView.Adapter<ParentCategoryAdapter.ParentViewHolder> {
     private final List<ParentCategory> parentCategoryList;
     private Context context;
 

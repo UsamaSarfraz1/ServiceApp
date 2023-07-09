@@ -10,6 +10,7 @@ public class SharedPrefsManager {
     private static final String PREFS_NAME = "com.service.app";
     private static final String KEY_ROLE = "role";
     private static final String KEY_USER = "user";
+
     private Gson gson;
 
     private SharedPreferences sharedPrefs;
@@ -23,9 +24,18 @@ public class SharedPrefsManager {
         sharedPrefs.edit().putString(KEY_ROLE, role).apply();
     }
 
+
     public String getRole() {
         return sharedPrefs.getString(KEY_ROLE, null);
     }
+
+    public void setUserStatus(String status){
+        User user=getUser();
+        user.setStatus(status);
+        saveUser(user);
+    }
+
+
 
     public void saveUser(User user) {
         String userInfo=gson.toJson(user);

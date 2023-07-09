@@ -18,9 +18,11 @@ import com.myapp.serviceapp.databinding.ActivityPostBinding;
 import com.myapp.serviceapp.helper.Constants;
 import com.myapp.serviceapp.helper.SharedPrefsManager;
 import com.myapp.serviceapp.helper.Toasty;
+import com.myapp.serviceapp.model.Offers;
 import com.myapp.serviceapp.model.ParentCategory;
 import com.myapp.serviceapp.model.TaskModel;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
@@ -100,11 +102,12 @@ public class PostActivity extends AppCompatActivity {
         String catId= parentCategory.getCatId();
         String title=binding.titleEditText.getText().toString();
         String detail= binding.detailEditText.getText().toString();
-        String location= "Faisalabad";
+        String location= binding.locationEditText.getText().toString();
         String budget = binding.budgetEditText.getText().toString();
         String date = binding.editTextCurrentDay.getText().toString()+"-"+binding.editTextCurrentMonth.getText().toString()+"-"+binding.editTextCurrentYear.getText().toString();
         String key=mRef.push().getKey();
-        TaskModel task=new TaskModel(key,userId,title,detail,catId,catName,location,budget,date);
+        TaskModel task=new TaskModel(key,userId,title,detail,catId,catName,location,budget,date,"open","");
+        task.setOrderlist(null);
 
         if (title.isEmpty()){
             Toasty.show(this,"Please Enter Title");

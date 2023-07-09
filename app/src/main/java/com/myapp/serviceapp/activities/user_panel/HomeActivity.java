@@ -26,7 +26,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationBarView
         super.onCreate(savedInstanceState);
         binding=ActivityHomeBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        replaceFragment(new HomeFragment(),"home");
+        replaceFragment(new AllTaskFragment(),"home");
         binding.bottomNav.setOnItemSelectedListener(this);
     }
 

@@ -47,12 +47,13 @@ public class UpdateCategoryActivity extends AppCompatActivity {
         mRef=FirebaseDatabase.getInstance().getReference(Constants.CATEGORIES);
         ParentCategory category= (ParentCategory) getIntent().getExtras().get("category");
         binding.catNameEditText.setText(category.getCatParentName());
+        binding.catDescEditText.setText(category.getDiscription());
         setupDropDown();
         parentId= category.getCatParentId();
 
         binding.btnUpdate.setOnClickListener(view -> {
             Map<String, Object> updatedData = new HashMap<>();
-            updatedData.put(category.getCatId(), new ParentCategory(category.getCatId(), binding.catNameEditText.getText().toString(), parentId));
+            updatedData.put(category.getCatId(), new ParentCategory(category.getCatId(), binding.catNameEditText.getText().toString(), parentId,binding.catDescEditText.getText().toString()));
             mRef.updateChildren(updatedData)
                     .addOnCompleteListener(new OnCompleteListener<Void>() {
                 @Override

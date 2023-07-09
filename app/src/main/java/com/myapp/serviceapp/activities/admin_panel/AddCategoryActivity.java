@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -128,10 +129,12 @@ public class AddCategoryActivity extends AppCompatActivity {
         String categoryName = binding.catNameEditText.getText().toString().trim();
         String categoryDesc = binding.catDescEditText.getText().toString().trim();
 
-        if (!categoryName.isEmpty()) {
+        if (parentId==null){
+            Toasty.show(this,"Please Select Parent Category");
+        }else if (!categoryName.isEmpty()) {
             String categoryId = mRef.push().getKey();
            /* ChildCategory childCategory=new ChildCategory(categoryId,categoryName,categoryDesc);*/
-            ParentCategory parentCategory=new ParentCategory(categoryId,categoryName,parentId);
+            ParentCategory parentCategory=new ParentCategory(categoryId,categoryName,parentId,"");
             mRef.child(categoryId).setValue(parentCategory)
                     .addOnCompleteListener(task -> {
                         if (task.isSuccessful()) {

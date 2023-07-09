@@ -20,9 +20,11 @@ import com.myapp.serviceapp.adapter.MyTaskAdapter;
 import com.myapp.serviceapp.databinding.FragmentHomeBinding;
 import com.myapp.serviceapp.helper.Constants;
 import com.myapp.serviceapp.helper.SharedPrefsManager;
+import com.myapp.serviceapp.model.Offers;
 import com.myapp.serviceapp.model.TaskModel;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class HomeFragment extends Fragment implements MyTaskAdapter.OnItemButtonClickListener {
 
@@ -54,8 +56,28 @@ public class HomeFragment extends Fragment implements MyTaskAdapter.OnItemButton
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 tasklist.clear();
                 for (DataSnapshot snapshot1:snapshot.getChildren()) {
-                    TaskModel taskModel=snapshot1.getValue(TaskModel.class);
+                    String taskId= String.valueOf(snapshot1.child("taskId").getValue());
+                    String taskTitle=String.valueOf(snapshot1.child("taskTitle").getValue());
+                    String taskDetails=String.valueOf(snapshot1.child("taskDetails").getValue());
+                    String catId=String.valueOf(snapshot1.child("catId").getValue());
+                    String catName=String.valueOf(snapshot1.child("catName").getValue());
+                    String location=String.valueOf(snapshot1.child("location").getValue());
+                    String budget=String.valueOf(snapshot1.child("budget").getValue());
+                    String date=String.valueOf(snapshot1.child("date").getValue());
+                    String userId=String.valueOf(snapshot1.child("userId").getValue());
+                    String status=String.valueOf(snapshot1.child("status").getValue());
+                    String assignUser=String.valueOf(snapshot1.child("assignUser").getValue());
+                    List<Offers> orderlist=new ArrayList<>();
+                    TaskModel taskModel=new TaskModel(taskId,userId,taskTitle,taskDetails,catId,catName,location,budget,date,status,assignUser);
+                    for (DataSnapshot listshot : snapshot1.child("orderlist").getChildren()) {
+                        Offers offers=listshot.getValue(Offers.class);
+                        offers.setOffer_id("dfsf");
+                        orderlist.add(offers);
+                    }
+
+                    taskModel.setOrderlist(orderlist);
                     tasklist.add(taskModel);
+
                 }
 
                 myTaskAdapter.notifyDataSetChanged();

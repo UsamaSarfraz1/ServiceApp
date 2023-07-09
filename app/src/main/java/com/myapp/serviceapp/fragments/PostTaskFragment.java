@@ -1,5 +1,6 @@
 package com.myapp.serviceapp.fragments;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,6 +27,7 @@ public class PostTaskFragment extends Fragment {
     private FragmentPostTaskBinding binding;
     private FirebaseDatabase mDatabase;
     private DatabaseReference mRef;
+    private ProgressDialog progressDialog;
 
     @Nullable
     @Override
@@ -33,7 +35,12 @@ public class PostTaskFragment extends Fragment {
         binding = FragmentPostTaskBinding.inflate(inflater, container, false);
         mDatabase= FirebaseDatabase.getInstance();
         mRef=mDatabase.getReference().child(Constants.CATEGORIES);
+        progressDialog=new ProgressDialog(requireContext());
+        progressDialog.setMessage("Please Wait");
+        progressDialog.setCanceledOnTouchOutside(false);
+        progressDialog.show();
         getDate();
+
         return binding.getRoot();
     }
     private void getDate() {
@@ -51,6 +58,7 @@ public class PostTaskFragment extends Fragment {
                     }
                 }
                 categoryAdapter.notifyDataSetChanged();
+                progressDialog.dismiss();
             }
             @Override
             public void onCancelled(@NonNull DatabaseError error) {

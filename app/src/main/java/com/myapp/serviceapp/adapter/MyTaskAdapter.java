@@ -1,6 +1,7 @@
 package com.myapp.serviceapp.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,6 +9,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.myapp.serviceapp.activities.user_panel.TaskDetailsActivity;
 import com.myapp.serviceapp.databinding.ItemTaskBinding;
 import com.myapp.serviceapp.model.TaskModel;
 
@@ -59,6 +61,19 @@ public class MyTaskAdapter extends RecyclerView.Adapter<MyTaskAdapter.MyTaskView
                 @Override
                 public void onClick(View view) {
                     listener.onDeleteItem(getAdapterPosition());
+                }
+            });
+            binding.container.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    binding.container.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            Intent intent=new Intent(context, TaskDetailsActivity.class);
+                            intent.putExtra("task",taskModel);
+                            context.startActivity(intent);
+                        }
+                    });
                 }
             });
 

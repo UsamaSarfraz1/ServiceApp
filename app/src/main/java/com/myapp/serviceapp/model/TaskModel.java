@@ -1,18 +1,23 @@
 package com.myapp.serviceapp.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 public class TaskModel implements Serializable {
-    String taskId;
-    String taskTitle;
-    String taskDetails;
-    String catId;
-    String catName;
-    String location;
-    String budget;
-    String date;
-    String userId;
-    public TaskModel(String taskId,String userId,String taskTitle, String taskDetails, String catId, String catName, String location, String budget, String date) {
+    private String taskId;
+    private String taskTitle;
+    private String taskDetails;
+    private String catId;
+    private String catName;
+    private String location;
+    private String budget;
+    private String date;
+    private String userId;
+    private String status;
+    private String assignUser;
+    private List<Offers> orderlist=new ArrayList<>();
+    public TaskModel(String taskId,String userId,String taskTitle, String taskDetails, String catId, String catName, String location, String budget, String date, String status, String assignUser) {
         this.taskId = taskId;
         this.userId=userId;
         this.taskDetails = taskDetails;
@@ -22,6 +27,16 @@ public class TaskModel implements Serializable {
         this.budget = budget;
         this.date = date;
         this.taskTitle=taskTitle;
+        this.status=status;
+        this.assignUser=assignUser;
+    }
+
+    public String getAssignUser() {
+        return assignUser;
+    }
+
+    public void setAssignUser(String assignUser) {
+        this.assignUser = assignUser;
     }
 
     public String getTaskTitle() {
@@ -97,5 +112,48 @@ public class TaskModel implements Serializable {
 
     public void setDate(String date) {
         this.date = date;
+    }
+
+    public void assign() {
+        if (status.equals("open")) {
+            status = "assigned";
+            System.out.println("Task assigned.");
+        } else {
+            System.out.println("Task cannot be assigned as it is already in progress or completed.");
+        }
+    }
+
+    public void complete() {
+        if (status.equals("assigned")) {
+            status = "completed";
+            System.out.println("Task completed.");
+        } else {
+            System.out.println("Task cannot be marked as completed as it is not yet assigned or already completed.");
+        }
+    }
+
+    public void review() {
+        if (status.equals("completed")) {
+            status = "reviewed";
+            System.out.println("Task reviewed.");
+        } else {
+            System.out.println("Task cannot be reviewed as it is not yet completed or already reviewed.");
+        }
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public List<Offers> getOrderlist() {
+        return orderlist;
+    }
+
+    public void setOrderlist(List<Offers> orderlist) {
+        this.orderlist = orderlist;
     }
 }
