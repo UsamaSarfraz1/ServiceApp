@@ -15,6 +15,7 @@ public class User implements Serializable {
     private String role;
     private String status;
     private Double userAverageRating;
+    private String cnicUrl;
     private HashMap<String,Reviews> reviewsList;
 
     public User() {
@@ -31,6 +32,15 @@ public class User implements Serializable {
         this.role = role;
         this.reviewsList=new HashMap<>();
         this.status="open";
+    }
+
+
+    public String getCnicUrl() {
+        return cnicUrl;
+    }
+
+    public void setCnicUrl(String cnicUrl) {
+        this.cnicUrl = cnicUrl;
     }
 
     public String getStatus() {

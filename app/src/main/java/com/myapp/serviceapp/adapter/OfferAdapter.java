@@ -1,8 +1,6 @@
 package com.myapp.serviceapp.adapter;
 
 import android.content.Context;
-import android.content.Intent;
-import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,9 +13,9 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.ktx.Firebase;
 import com.myapp.serviceapp.databinding.ItemOfferBinding;
 import com.myapp.serviceapp.helper.Constants;
+import com.myapp.serviceapp.helper.SharedPrefsManager;
 import com.myapp.serviceapp.model.Offers;
 
 import java.util.List;
@@ -28,12 +26,14 @@ public class OfferAdapter extends RecyclerView.Adapter<OfferAdapter.OfferViewHol
     boolean status;
     DatabaseReference mRef;
     OfferCallBacks offerCallBacks;
+    SharedPrefsManager sharedPrefsManager;
     public OfferAdapter(Context context, List<Offers> offersList,boolean status,OfferCallBacks offerCallBacks) {
         this.context = context;
         this.offersList = offersList;
         this.status=status;
         this.offerCallBacks=offerCallBacks;
         mRef=FirebaseDatabase.getInstance().getReference(Constants.USERS);
+        sharedPrefsManager=new SharedPrefsManager(context);
 
     }
 
@@ -67,19 +67,23 @@ public class OfferAdapter extends RecyclerView.Adapter<OfferAdapter.OfferViewHol
                 binding.btnAssign.setVisibility(View.VISIBLE);
                 binding.phone.setVisibility(View.VISIBLE);
 
+                if (offers.isCompleted()){
+                    binding.btnComplete.setVisibility(View.GONE);
+                    binding.btnAssign.setVisibility(View.GONE);
+                    binding.btnReview.setVisibility(View.VISIBLE);
+                }
+
+                if (offers.isAssigned()){
+                    binding.btnComplete.setVisibility(View.VISIBLE);
+                    binding.btnAssign.setVisibility(View.GONE);
+                }
             }
 
-            if (offers.isAssigned()){
-                binding.btnComplete.setVisibility(View.VISIBLE);
-                binding.btnAssign.setVisibility(View.GONE);
+
+            if (offers.getFreelancer_id().equals(sharedPrefsManager.getUser().getUserId())&&offers.isAssigned()){
+                binding.phone.setVisibility(View.VISIBLE);
             }
 
-
-            if (offers.isCompleted()){
-                binding.btnComplete.setVisibility(View.GONE);
-                binding.btnAssign.setVisibility(View.GONE);
-                binding.btnReview.setVisibility(View.VISIBLE);
-            }
 
             mRef.child(offers.getFreelancer_id()).child("reviewsList").addValueEventListener(new ValueEventListener() {
                 @Override
@@ -98,15 +102,16 @@ public class OfferAdapter extends RecyclerView.Adapter<OfferAdapter.OfferViewHol
             binding.phone.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(Intent.ACTION_DIAL);
-                    intent.setData(Uri.parse("tel:" + offers.getOffer_phone()));
-
-                    if (intent.resolveActivity(context.getPackageManager()) != null) {
-                        // Start the dialer activity
-                        context.startActivity(intent);
-                    }
+                    offerCallBacks.onClickPhone(getAdapterPosition());
                 }
             });
+            if (offers.isReviewed()){
+                binding.btnReview.setText("Reviewed");
+                binding.btnReview.setEnabled(false);
+                binding.btnReview.setClickable(false);
+                binding.btnAssign.setVisibility(View.GONE);
+                binding.btnComplete.setVisibility(View.GONE);
+            }
 
             binding.btnAssign.setOnClickListener(v -> {
                 offerCallBacks.onClickAssign(getAdapterPosition());
@@ -118,12 +123,7 @@ public class OfferAdapter extends RecyclerView.Adapter<OfferAdapter.OfferViewHol
                 offerCallBacks.onClickComplete(getAdapterPosition());
             });
 
-            binding.btnReview.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    offerCallBacks.onClickReview(getAdapterPosition());
-                }
-            });
+            binding.btnReview.setOnClickListener(v -> offerCallBacks.onClickReview(getAdapterPosition()));
         }
     }
 
@@ -132,5 +132,6 @@ public class OfferAdapter extends RecyclerView.Adapter<OfferAdapter.OfferViewHol
         void onClickAssign(int position);
         void onClickComplete(int position);
         void onClickReview(int position);
+        void onClickPhone(int position);
     }
 }

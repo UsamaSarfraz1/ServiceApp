@@ -6,7 +6,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -41,6 +43,7 @@ public class TaskDetailsActivity extends AppCompatActivity implements OfferAdapt
     DatabaseReference mRef;
     OfferAdapter offerAdapter;
     ProgressDialog progressDialog;
+    boolean status;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -73,30 +76,30 @@ public class TaskDetailsActivity extends AppCompatActivity implements OfferAdapt
                             })
                             .create()
                             .show();
-                }else{
-                    if (taskModel.getOrderlist().size()>0){
-                        mRef.child(Constants.TASK).child(taskModel.getUserId()).child(taskModel.getTaskId()).child("orderlist").addListenerForSingleValueEvent(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                for (DataSnapshot dataSnapshot:snapshot.getChildren() ) {
-                                    Offers offer=dataSnapshot.getValue(Offers.class);
-                                    if (!offer.getFreelancer_id().equals(sharedPrefsManager.getUser().getUserId())) {
-                                        makeOffer();
-                                        break;
-                                    }
+                }else if (taskModel.getOrderlist().size()>0) {
+                    mRef.child(Constants.TASK).child(taskModel.getUserId()).child(taskModel.getTaskId()).child("orderlist").addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                                Offers offer = dataSnapshot.getValue(Offers.class);
+                                if (!offer.getFreelancer_id().equals(sharedPrefsManager.getUser().getUserId())) {
+                                    makeOffer();
+                                    break;
                                 }
                             }
+                        }
 
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError error) {
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
 
-                            }
-                        });
+                        }
+                    });
+
+
                     }else{
                         makeOffer();
                     }
                 }
-            }
 
         });
 
@@ -173,7 +176,7 @@ public class TaskDetailsActivity extends AppCompatActivity implements OfferAdapt
 
     private void setUpRecyclerView() {
         progressDialog.dismiss();
-        boolean status= taskModel.getUserId().equals(sharedPrefsManager.getUser().getUserId());
+        status= taskModel.getUserId().equals(sharedPrefsManager.getUser().getUserId());
         if (taskModel.getOrderlist()!=null) {
             Log.i("size",""+taskModel.getOrderlist().size());
             offerAdapter = new OfferAdapter(this, taskModel.getOrderlist(), status,this);
@@ -196,7 +199,7 @@ public class TaskDetailsActivity extends AppCompatActivity implements OfferAdapt
                     totalReviews = "0";
 
                 Offers offers = new Offers(
-                        key, totalReviews, 5, user.getPhone(), user.getName(), user.getUserId(),false,false
+                        key, totalReviews, 5, user.getPhone(), user.getName(), user.getUserId(),false,false,false
                 );
                 mRef.child(Constants.TASK).child(taskModel.getUserId()).child(taskModel.getTaskId()).child("orderlist").child(key).setValue(offers)
                         .addOnCompleteListener(task -> {
@@ -292,6 +295,42 @@ public class TaskDetailsActivity extends AppCompatActivity implements OfferAdapt
 
     }
 
+    @Override
+    public void onClickPhone(int position) {
+        Intent intent = new Intent(Intent.ACTION_DIAL);
+        if (status) {
+            intent.setData(Uri.parse("tel:" + taskModel.getOrderlist().get(position).getOffer_phone()));
+            if (intent.resolveActivity(getPackageManager()) != null) {
+                // Start the dialer activity
+                startActivity(intent);
+            }
+        }else {
+            mRef.child(Constants.USERS).child(taskModel.getUserId()).child("phone").addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    if (intent.resolveActivity(getPackageManager()) != null) {
+                        // Start the dialer activity
+                        String phone=snapshot.getValue(String.class);
+                        intent.setData(Uri.parse("tel:" + phone));
+
+                        if (intent.resolveActivity(getPackageManager()) != null) {
+                            // Start the dialer activity
+                            startActivity(intent);
+                        }
+
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
+        }
+
+
+    }
+
     private void showReviewDialog(int position) {
         ReviewDialogFragment dialog = new ReviewDialogFragment(position);
         dialog.show(getSupportFragmentManager(), "review_dialog");
@@ -301,15 +340,18 @@ public class TaskDetailsActivity extends AppCompatActivity implements OfferAdapt
     public void onReviewSubmitted(float rating, String comment,int position) {
         String key=mRef.push().getKey();
         Reviews reviews=new Reviews(rating,comment);
+        Offers offers=taskModel.getOrderlist().get(position);
+        offers.setReviewed(true);
         mRef.child(Constants.USERS).child(taskModel.getOrderlist().get(position).getFreelancer_id()).child("reviewsList").child(key).setValue(reviews)
                 .addOnCompleteListener(task -> {
-                    Toasty.show(this,"Done");
-                }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Toasty.show(TaskDetailsActivity.this,e.getMessage());
-                    }
-                });
+                    mRef.child(Constants.TASK).child(taskModel.getUserId()).child(taskModel.getTaskId()).setValue(taskModel).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            Toasty.show(TaskDetailsActivity.this,"Done");
+                        }
+                    });
+
+                }).addOnFailureListener(e -> Toasty.show(TaskDetailsActivity.this,e.getMessage()));
 
     }
 }

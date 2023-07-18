@@ -22,8 +22,8 @@
                 android:id="@+id/cat_icon"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_baseline_person_24"
-                app:tint="@color/black"
+                android:src="@drawable/ic_baseline_category_24"
+                app:tint="@color/color_theme"
                 />
 
             <TextView
@@ -31,6 +31,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Cleaning"
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:textAppearance="@style/TextAppearance.AppCompat.Caption"
                 />
         </LinearLayout>
     </androidx.cardview.widget.CardView>

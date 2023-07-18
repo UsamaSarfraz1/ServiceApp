@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.myapp.serviceapp.R;
 import com.myapp.serviceapp.activities.admin_panel.CategoryActivity;
+import com.myapp.serviceapp.activities.user_panel.MainCategoryActivity;
 import com.myapp.serviceapp.activities.user_panel.PostActivity;
 import com.myapp.serviceapp.model.ChildCategory;
 import com.myapp.serviceapp.model.ParentCategory;
@@ -24,10 +25,12 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
 
     private List<ParentCategory> categoryList;
     private Context context;
+    private String tag;
 
-    public CategoryAdapter(List<ParentCategory> categoryList, Context context) {
+    public CategoryAdapter(List<ParentCategory> categoryList, Context context,String tag) {
         this.categoryList = categoryList;
         this.context = context;
+        this.tag=tag;
     }
 
     @NonNull
@@ -42,10 +45,13 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
     public void onBindViewHolder(@NonNull CategoryAdapter.CategoryViewHolder holder, int position) {
         ParentCategory category=categoryList.get(position);
         holder.title.setText(category.getCatParentName());
-        holder.cardView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent= new Intent(context, PostActivity.class);
+        holder.cardView.setOnClickListener(v -> {
+            if (tag.equals("child")) {
+                Intent intent = new Intent(context, PostActivity.class);
+                intent.putExtra("cat", category);
+                context.startActivity(intent);
+            }else{
+                Intent intent= new Intent(context, MainCategoryActivity.class);
                 intent.putExtra("cat",category);
                 context.startActivity(intent);
             }

@@ -41,6 +41,7 @@ public class UserActivity extends AppCompatActivity {
         userAdapter = new UserAdapter(userList, this);
         binding.rvUser.setLayoutManager(new LinearLayoutManager(this));
         binding.rvUser.setAdapter(userAdapter);
+
         // Retrieve the user list from Firebase
         retrieveUserList();
 

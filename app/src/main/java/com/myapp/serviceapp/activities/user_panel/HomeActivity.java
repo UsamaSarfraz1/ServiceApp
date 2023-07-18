@@ -13,19 +13,23 @@ import com.google.android.material.navigation.NavigationBarView;
 import com.myapp.serviceapp.R;
 import com.myapp.serviceapp.databinding.ActivityHomeBinding;
 import com.myapp.serviceapp.fragments.AllTaskFragment;
+import com.myapp.serviceapp.fragments.FreelancerTask;
 import com.myapp.serviceapp.fragments.HomeFragment;
 import com.myapp.serviceapp.fragments.PostTaskFragment;
 import com.myapp.serviceapp.fragments.ProfileFragment;
+import com.myapp.serviceapp.helper.SharedPrefsManager;
 
 public class HomeActivity extends AppCompatActivity implements NavigationBarView.OnItemSelectedListener {
 
     FragmentManager fragmentManager = getSupportFragmentManager();
     private ActivityHomeBinding binding;
+    SharedPrefsManager sharedPrefsManager;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding=ActivityHomeBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+        sharedPrefsManager=new SharedPrefsManager(this);
         replaceFragment(new AllTaskFragment(),"home");
         binding.bottomNav.setOnItemSelectedListener(this);
     }
@@ -42,7 +46,10 @@ public class HomeActivity extends AppCompatActivity implements NavigationBarView
         Fragment fragment=new Fragment();
         switch (item.getItemId()){
             case R.id.nav_myTask:
-                fragment=new HomeFragment();
+                if(sharedPrefsManager.getUser().getRole().equals("client"))
+                    fragment=new HomeFragment();
+                else
+                    fragment=new FreelancerTask();
                 break;
             case R.id.nav_post:
                 fragment=new PostTaskFragment();

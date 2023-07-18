@@ -36,185 +36,190 @@
             />
 
 
-
     <LinearLayout
+        android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
         android:layout_marginHorizontal="@dimen/_16sdp"
+        android:orientation="vertical"
         app:layout_constraintTop_toBottomOf="@id/avatar"
-        >
+        tools:layout_editor_absoluteX="21dp">
+
         <RatingBar
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:scaleY="0.7"
-            android:scaleX="0.7"
             android:layout_gravity="center"
-            />
+            android:scaleX="0.7"
+            android:scaleY="0.7" />
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="@dimen/_13sdp"
-            android:text="Name"
-            android:textStyle="bold"
-            android:textColor="@color/color_theme"
-            android:drawableStart="@drawable/ic_baseline_person_24"
-            android:drawableTint="@color/color_theme"
-            android:drawablePadding="@dimen/_5sdp"
             android:backgroundTint="@android:color/transparent"
-            />
+            android:drawableStart="@drawable/ic_baseline_person_24"
+            android:drawablePadding="@dimen/_5sdp"
+            android:drawableTint="@color/color_theme"
+            android:text="Name"
+            android:textColor="@color/color_theme"
+            android:textSize="@dimen/_13sdp"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="@dimen/_12sdp"
-            android:text="Name"
-            android:fontFamily="sans-serif-light"
             android:layout_marginStart="@dimen/_23sdp"
-            android:textStyle="bold"
-            android:textColor="@color/black"
-            android:drawablePadding="@dimen/_5sdp"
             android:backgroundTint="@android:color/transparent"
-            />
+            android:drawablePadding="@dimen/_5sdp"
+            android:fontFamily="sans-serif-light"
+            android:text="Name"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_12sdp"
+            android:textStyle="bold" />
+
         <View
             android:layout_width="match_parent"
             android:layout_height="@dimen/_2sdp"
-            android:background="#E4E4E4"
             android:layout_marginTop="@dimen/_6sdp"
-            />
+            android:background="#E4E4E4" />
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="@dimen/_13sdp"
-            android:text="Email"
             android:layout_marginTop="@dimen/_10sdp"
-            android:textStyle="bold"
-            android:textColor="@color/color_theme"
-            android:drawableStart="@drawable/ic_baseline_alternate_email_24"
-            android:drawableTint="@color/color_theme"
-            android:drawablePadding="@dimen/_5sdp"
             android:backgroundTint="@android:color/transparent"
-            />
+            android:drawableStart="@drawable/ic_baseline_alternate_email_24"
+            android:drawablePadding="@dimen/_5sdp"
+            android:drawableTint="@color/color_theme"
+            android:text="Email"
+            android:textColor="@color/color_theme"
+            android:textSize="@dimen/_13sdp"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="@dimen/_12sdp"
-            android:text="Name"
             android:layout_marginStart="@dimen/_23sdp"
-            android:textStyle="bold"
-            android:fontFamily="sans-serif-light"
-            android:textColor="@color/black"
-            android:drawablePadding="@dimen/_5sdp"
             android:backgroundTint="@android:color/transparent"
-            />
+            android:drawablePadding="@dimen/_5sdp"
+            android:fontFamily="sans-serif-light"
+            android:text="Name"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_12sdp"
+            android:textStyle="bold" />
+
         <View
             android:layout_width="match_parent"
             android:layout_height="@dimen/_2sdp"
-            android:background="#E4E4E4"
             android:layout_marginTop="@dimen/_6sdp"
-            />
+            android:background="#E4E4E4" />
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="@dimen/_13sdp"
-            android:text="Address"
-            android:textStyle="bold"
-            android:textColor="@color/color_theme"
-            android:drawableStart="@drawable/ic_baseline_location_on_24"
-            android:drawableTint="@color/color_theme"
-            android:drawablePadding="@dimen/_5sdp"
             android:layout_marginTop="@dimen/_10sdp"
             android:backgroundTint="@android:color/transparent"
-            />
+            android:drawableStart="@drawable/ic_baseline_location_on_24"
+            android:drawablePadding="@dimen/_5sdp"
+            android:drawableTint="@color/color_theme"
+            android:text="Address"
+            android:textColor="@color/color_theme"
+            android:textSize="@dimen/_13sdp"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/address"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="@dimen/_12sdp"
-            android:text="Name"
             android:layout_marginStart="@dimen/_23sdp"
-            android:textStyle="bold"
-            android:fontFamily="sans-serif-light"
-            android:textColor="@color/black"
-            android:drawablePadding="@dimen/_5sdp"
             android:backgroundTint="@android:color/transparent"
-            />
+            android:drawablePadding="@dimen/_5sdp"
+            android:fontFamily="sans-serif-light"
+            android:text="Name"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_12sdp"
+            android:textStyle="bold" />
+
         <View
             android:layout_width="match_parent"
             android:layout_height="@dimen/_2sdp"
-            android:background="#E4E4E4"
             android:layout_marginTop="@dimen/_6sdp"
-            />
+            android:background="#E4E4E4" />
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="@dimen/_13sdp"
-            android:text="Cnic"
-            android:textStyle="bold"
-            android:textColor="@color/color_theme"
-            android:drawableStart="@drawable/ic_baseline_credit_card_24"
-            android:drawableTint="@color/color_theme"
-            android:drawablePadding="@dimen/_5sdp"
             android:layout_marginTop="@dimen/_10sdp"
             android:backgroundTint="@android:color/transparent"
-            />
+            android:drawableStart="@drawable/ic_baseline_credit_card_24"
+            android:drawablePadding="@dimen/_5sdp"
+            android:drawableTint="@color/color_theme"
+            android:text="Cnic"
+            android:textColor="@color/color_theme"
+            android:textSize="@dimen/_13sdp"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/cnic"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="@dimen/_14sdp"
-            android:text="Name"
             android:layout_marginStart="@dimen/_23sdp"
-            android:textStyle="bold"
-            android:fontFamily="sans-serif-light"
-            android:textColor="@color/black"
-            android:drawablePadding="@dimen/_5sdp"
             android:backgroundTint="@android:color/transparent"
-            />
+            android:drawablePadding="@dimen/_5sdp"
+            android:fontFamily="sans-serif-light"
+            android:text="Name"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_14sdp"
+            android:textStyle="bold" />
+
         <View
             android:layout_width="match_parent"
             android:layout_height="@dimen/_2sdp"
-            android:background="#E4E4E4"
             android:layout_marginTop="@dimen/_6sdp"
-            />
+            android:background="#E4E4E4" />
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="@dimen/_13sdp"
-            android:text="Phone"
-            android:textStyle="bold"
-            android:textColor="@color/color_theme"
-            android:drawableStart="@drawable/ic_baseline_phone_24"
-            android:drawableTint="@color/color_theme"
-            android:drawablePadding="@dimen/_5sdp"
             android:layout_marginTop="@dimen/_10sdp"
             android:backgroundTint="@android:color/transparent"
-            />
+            android:drawableStart="@drawable/ic_baseline_phone_24"
+            android:drawablePadding="@dimen/_5sdp"
+            android:drawableTint="@color/color_theme"
+            android:text="Phone"
+            android:textColor="@color/color_theme"
+            android:textSize="@dimen/_13sdp"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/phone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="@dimen/_14sdp"
-            android:text="Name"
             android:layout_marginStart="@dimen/_23sdp"
-            android:textStyle="bold"
-            android:fontFamily="sans-serif-light"
-            android:textColor="@color/black"
-            android:drawablePadding="@dimen/_5sdp"
             android:backgroundTint="@android:color/transparent"
-            />
+            android:drawablePadding="@dimen/_5sdp"
+            android:fontFamily="sans-serif-light"
+            android:text="Name"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_14sdp"
+            android:textStyle="bold" />
+
         <View
             android:layout_width="match_parent"
             android:layout_height="@dimen/_2sdp"
-            android:background="#E4E4E4"
-            android:layout_marginTop="@dimen/_6sdp"/>
+            android:layout_marginTop="@dimen/_6sdp"
+            android:background="#E4E4E4" />
     </LinearLayout>
 
+    <Button
+        android:id="@+id/btn_cnic"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Upload Cnic"
+        android:layout_marginHorizontal="@dimen/_20sdp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

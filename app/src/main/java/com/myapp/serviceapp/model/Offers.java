@@ -11,12 +11,13 @@ public class Offers implements Serializable {
     private String freelancer_id;
     private boolean isAssigned;
     private boolean isCompleted;
-    
+    private boolean isReviewed;
+
 
     public Offers() {
     }
 
-    public Offers(String offer_id, String offer_reviews, double offer_rating, String offer_phone, String freelancerName, String freelancer_id, Boolean isAssigned, Boolean isCompleted) {
+    public Offers(String offer_id, String offer_reviews, double offer_rating, String offer_phone, String freelancerName, String freelancer_id, Boolean isAssigned, Boolean isCompleted,Boolean isReviewed) {
         this.offer_id = offer_id;
         this.offer_reviews = offer_reviews;
         this.offer_rating = offer_rating;
@@ -25,8 +26,17 @@ public class Offers implements Serializable {
         this.freelancer_id = freelancer_id;
         this.isAssigned=isAssigned;
         this.isCompleted=isCompleted;
+        this.isReviewed=isReviewed;
     }
 
+
+    public boolean isReviewed() {
+        return isReviewed;
+    }
+
+    public void setReviewed(boolean reviewed) {
+        isReviewed = reviewed;
+    }
 
     public boolean isCompleted() {
         return isCompleted;

@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.myapp.serviceapp.activities.user_panel.TaskDetailsActivity;
 import com.myapp.serviceapp.databinding.ItemTaskBinding;
+import com.myapp.serviceapp.helper.SharedPrefsManager;
 import com.myapp.serviceapp.model.TaskModel;
 
 import java.util.ArrayList;
@@ -21,12 +22,24 @@ public class MyTaskAdapter extends RecyclerView.Adapter<MyTaskAdapter.MyTaskView
     private Context context;
 
     private OnItemButtonClickListener listener;
-
+    private String tag;
+    SharedPrefsManager sharedPrefsManager;
 
     public MyTaskAdapter(ArrayList<TaskModel> taskList, Context context, MyTaskAdapter.OnItemButtonClickListener listener) {
         this.taskList = taskList;
         this.context = context;
         this.listener=listener;
+        this.tag="client";
+        sharedPrefsManager=new SharedPrefsManager(context);
+    }
+
+    public MyTaskAdapter(ArrayList<TaskModel> taskList, Context context,String tag){
+        this.taskList = taskList;
+        this.context = context;
+        this.tag=tag;
+        sharedPrefsManager=new SharedPrefsManager(context);
+
+
     }
 
     @NonNull
@@ -54,6 +67,17 @@ public class MyTaskAdapter extends RecyclerView.Adapter<MyTaskAdapter.MyTaskView
         }
 
         public void bind(TaskModel taskModel){
+
+            if (tag.equals("freelance")){
+                binding.btnDel.setVisibility(View.GONE);
+                binding.btnEdit.setVisibility(View.GONE);
+                if (taskModel.getAssignUser().equals(sharedPrefsManager.getUser().getUserId())){
+                    binding.txtStatus.setVisibility(View.VISIBLE);
+                }else{
+                    binding.txtStatus.setVisibility(View.GONE);
+                }
+            }
+
             binding.taskTitle.setText(taskModel.getTaskTitle());
             binding.price.setText(taskModel.getBudget());
             binding.location.setText(taskModel.getLocation());

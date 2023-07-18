@@ -1,60 +1,61 @@
-package com.myapp.serviceapp.fragments;
+package com.myapp.serviceapp.activities.user_panel;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ProgressDialog;
 import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.myapp.serviceapp.R;
 import com.myapp.serviceapp.adapter.CategoryAdapter;
-import com.myapp.serviceapp.databinding.FragmentPostTaskBinding;
+import com.myapp.serviceapp.databinding.ActivityMainCategoryBinding;
 import com.myapp.serviceapp.helper.Constants;
 import com.myapp.serviceapp.model.ParentCategory;
 
 import java.util.ArrayList;
 
-public class PostTaskFragment extends Fragment {
-
-    private FragmentPostTaskBinding binding;
+public class MainCategoryActivity extends AppCompatActivity {
+    ActivityMainCategoryBinding binding;
     private FirebaseDatabase mDatabase;
     private DatabaseReference mRef;
     private ProgressDialog progressDialog;
-
-    @Nullable
+    private ParentCategory parentCategory;
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        binding = FragmentPostTaskBinding.inflate(inflater, container, false);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        binding=ActivityMainCategoryBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
         mDatabase= FirebaseDatabase.getInstance();
         mRef=mDatabase.getReference().child(Constants.CATEGORIES);
-        progressDialog=new ProgressDialog(requireContext());
+        progressDialog=new ProgressDialog(this);
         progressDialog.setMessage("Please Wait");
         progressDialog.setCanceledOnTouchOutside(false);
         progressDialog.show();
+        if (getIntent().getExtras()!=null){
+            parentCategory= (ParentCategory) getIntent().getExtras().get("cat");
+        }
         getDate();
-
-        return binding.getRoot();
     }
+
     private void getDate() {
         ArrayList<ParentCategory> list = new ArrayList<>();
-        CategoryAdapter categoryAdapter = new CategoryAdapter(list, requireActivity(),"parent");
+        CategoryAdapter categoryAdapter = new CategoryAdapter(list, this,"child");
         binding.rvCategory.setAdapter(categoryAdapter);
         mRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 list.clear();
                 for (DataSnapshot dataSnapchat : snapshot.getChildren()) {
-                    ParentCategory parentCategory = dataSnapchat.getValue(ParentCategory.class);
-                    if (parentCategory.getCatParentId().equals("")) {
-                        list.add(parentCategory);
+                    ParentCategory category = dataSnapchat.getValue(ParentCategory.class);
+
+
+                    if (parentCategory.getCatId().equals(category.getCatParentId())) {
+                        list.add(category);
                     }
                 }
                 categoryAdapter.notifyDataSetChanged();
@@ -65,5 +66,4 @@ public class PostTaskFragment extends Fragment {
             }
         });
     }
-
 }

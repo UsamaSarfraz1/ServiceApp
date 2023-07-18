@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment;
 import com.google.firebase.auth.FirebaseAuth;
 import com.myapp.serviceapp.activities.LoginActivity;
 import com.myapp.serviceapp.activities.admin_panel.AdminActivity;
+import com.myapp.serviceapp.activities.user_panel.UploadCnicActivity;
 import com.myapp.serviceapp.databinding.FragmentHomeBinding;
 import com.myapp.serviceapp.databinding.FragmentProfileBinding;
 import com.myapp.serviceapp.helper.SharedPrefsManager;
@@ -37,6 +38,7 @@ public class ProfileFragment extends Fragment {
                 requireActivity().finish();
             }
         });
+        binding.btnCnic.setOnClickListener(v -> startActivity(new Intent(requireActivity(), UploadCnicActivity.class)));
         return binding.getRoot();
 
 

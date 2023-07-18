@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Toast;
@@ -20,6 +21,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.myapp.serviceapp.activities.admin_panel.AdminActivity;
+import com.myapp.serviceapp.activities.user_panel.ForgotPasswordActivity;
 import com.myapp.serviceapp.activities.user_panel.HomeActivity;
 import com.myapp.serviceapp.databinding.ActivityLoginBinding;
 import com.myapp.serviceapp.helper.Constants;
@@ -46,6 +48,7 @@ public class LoginActivity extends AppCompatActivity {
             String userRole=sharedPreferences.getRole();
             switch (userRole) {
                 case "client":
+                case "freelancer":
                     startActivity(new Intent(LoginActivity.this, HomeActivity.class));
                     finish();
                     break;
@@ -53,13 +56,15 @@ public class LoginActivity extends AppCompatActivity {
                     startActivity(new Intent(LoginActivity.this, AdminActivity.class));
                     finish();
                     break;
-                case "freelancer":
-                    startActivity(new Intent(LoginActivity.this, HomeActivity.class));
-                    finish();
-                    break;
             }
         }
 
+        binding.btnForgot.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(LoginActivity.this, ForgotPasswordActivity.class));
+            }
+        });
 
         binding.btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override

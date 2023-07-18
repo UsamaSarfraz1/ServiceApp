@@ -93,7 +93,7 @@ public class HomeFragment extends Fragment implements MyTaskAdapter.OnItemButton
 
     @Override
     public void onDeleteItem(int position) {
-        mRef.child(tasklist.get(position).getCatId()).removeValue();
+        mRef.child(tasklist.get(position).getTaskId()).removeValue();
         myTaskAdapter.notifyDataSetChanged();
     }
 
