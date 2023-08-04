@@ -80,6 +80,8 @@ public class OfferAdapter extends RecyclerView.Adapter<OfferAdapter.OfferViewHol
             }
 
 
+
+
             if (offers.getFreelancer_id().equals(sharedPrefsManager.getUser().getUserId())&&offers.isAssigned()){
                 binding.phone.setVisibility(View.VISIBLE);
             }

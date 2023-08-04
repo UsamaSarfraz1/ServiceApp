@@ -1,8 +1,5 @@
 package com.myapp.serviceapp.activities.user_panel;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
@@ -13,8 +10,10 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -62,52 +61,56 @@ public class TaskDetailsActivity extends AppCompatActivity implements OfferAdapt
         if (taskModel.getUserId().equals(sharedPrefsManager.getUser().getUserId())||sharedPrefsManager.getRole().equals("client")){
             binding.btnOffer.setVisibility(View.GONE);
         }
-        binding.btnOffer.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (sharedPrefsManager.getUser().getStatus().equals("close")){
-                    new AlertDialog.Builder(TaskDetailsActivity.this)
-                            .setMessage("Already Have Task")
-                            .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    dialog.dismiss();
-                                }
-                            })
-                            .create()
-                            .show();
-                }else if (taskModel.getOrderlist().size()>0) {
-                    mRef.child(Constants.TASK).child(taskModel.getUserId()).child(taskModel.getTaskId()).child("orderlist").addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot snapshot) {
-                            for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                                Offers offer = dataSnapshot.getValue(Offers.class);
-                                if (!offer.getFreelancer_id().equals(sharedPrefsManager.getUser().getUserId())) {
-                                    makeOffer();
-                                    break;
-                                }
+        binding.btnOffer.setOnClickListener(v -> {
+            if (sharedPrefsManager.getUser().getStatus().equals("close")){
+                new AlertDialog.Builder(TaskDetailsActivity.this)
+                        .setMessage("Already Have Task")
+                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        })
+                        .create()
+                        .show();
+            }else if (taskModel.getOrderlist().size()>0) {
+                mRef.child(Constants.TASK).child(taskModel.getUserId()).child(taskModel.getTaskId()).child("orderlist").addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                            Offers offer = dataSnapshot.getValue(Offers.class);
+                            if (!offer.getFreelancer_id().equals(sharedPrefsManager.getUser().getUserId())) {
+                                makeOffer();
+                                break;
+                            }else{
+                                binding.btnOffer.setClickable(false);
+                                binding.btnOffer.setBackgroundColor(Color.LTGRAY);
+                                binding.btnOffer.setEnabled(false);
+                                binding.btnOffer.setTextColor(Color.WHITE);
                             }
                         }
-
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError error) {
-
-                        }
-                    });
-
-
-                    }else{
-                        makeOffer();
                     }
-                }
 
-        });
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+
+
+                }else{
+                    makeOffer();
+                }
+            });
 
 
 
     }
 
+
+
     private void updateTaskData() {
+
         mRef.child(Constants.TASK).child(taskModel.getUserId()).child(taskModel.getTaskId())
                 .addValueEventListener(new ValueEventListener() {
                     @Override
@@ -127,6 +130,9 @@ public class TaskDetailsActivity extends AppCompatActivity implements OfferAdapt
                         List<Offers> orderlist=new ArrayList<>();
                         for (DataSnapshot listshot : snapshot1.child("orderlist").getChildren()) {
                             Offers offers=listshot.getValue(Offers.class);
+                            if (offers.getFreelancer_id().equals(sharedPrefsManager.getUser().getUserId())) {
+                                binding.btnOffer.setVisibility(View.GONE);
+                            }
                             orderlist.add(offers);
                         }
                         taskModel.setOrderlist(orderlist);
@@ -203,7 +209,7 @@ public class TaskDetailsActivity extends AppCompatActivity implements OfferAdapt
                 );
                 mRef.child(Constants.TASK).child(taskModel.getUserId()).child(taskModel.getTaskId()).child("orderlist").child(key).setValue(offers)
                         .addOnCompleteListener(task -> {
-
+                            binding.btnOffer.setVisibility(View.GONE);
                         });
             }
 
